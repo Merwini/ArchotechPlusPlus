@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using RimWorld;
 using Verse;
@@ -27,10 +28,20 @@ namespace ArchotechPlus
         
         private BodyPartRecord _bodyPartRegenerationTarget;
         private Hediff _woundRegenerationTarget;
+        private Hediff _illnessHealingTarget;
 
+        public Dictionary<BodyPartRecord, HediffDef> previousImplants;
         private static readonly HediffDef RegenProgress = DefDatabase<HediffDef>.GetNamed("RegenerationProgress");
         private float PercentageCharged => (float)_ticks / _ticksFullCharge;
         
+        public void RememberImplant(Hediff_Implant hediff_Implant, BodyPartRecord part)
+        {
+            if (previousImplants is null)
+            {
+                previousImplants = new Dictionary<BodyPartRecord, HediffDef>();
+            }
+            previousImplants[part] = hediff_Implant.def;
+        }
         public override void CompPostMake()
         {
             ResetChargingTicks();
@@ -54,7 +65,7 @@ namespace ArchotechPlus
         {
             if (IsPawnInjured() && UsableHealingCharge())
             {
-                if (TryRestoreMissingPart() || TryHealRandomPermanentWound())
+                if (TryRestoreMissingPart() || TryHealRandomPermanentWound() || TryHealRandomDisease())
                 {
                     _ticks = 0;
                     IsPawnInjured();
@@ -104,8 +115,14 @@ namespace ArchotechPlus
         {
             _bodyPartRegenerationTarget = FindBiggestMissingBodyPart();
             _woundRegenerationTarget = FindRandomPermanentWound();
-            return _bodyPartRegenerationTarget != null || _woundRegenerationTarget != null;
+            _illnessHealingTarget = FindRandomDisease();
+            return _bodyPartRegenerationTarget != null || _woundRegenerationTarget != null || _illnessHealingTarget != null;
         }
+        private Hediff FindRandomDisease()
+        {
+            return Pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable).TryRandomElement(out var result) ? result : null;
+        }
+
         private BodyPartRecord FindBiggestMissingBodyPart(float minCoverage = 0.0f)
         {
             BodyPartRecord bodyPartRecord = null;
@@ -125,6 +142,7 @@ namespace ArchotechPlus
             return !Pawn.health.hediffSet.hediffs.Where(hd => hd.def == HediffDefOf.ResurrectionPsychosis || hd.IsPermanent() || hd.def.chronic)
                 .TryRandomElement(out var result) ? null : result;
         }
+
         private bool TryRestoreMissingPart()
         {
             if (_bodyPartRegenerationTarget == null)
@@ -165,6 +183,21 @@ namespace ArchotechPlus
             return true;
         }
 
+        private bool TryHealRandomDisease()
+        {
+            if (_illnessHealingTarget == null)
+            {
+                return false;
+            }
+            Pawn.health.hediffSet.hediffs.Remove(_illnessHealingTarget);
+            if (!PawnUtility.ShouldSendNotificationAbout(Pawn))
+            {
+                return true;
+            }
+
+            Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate(parent.LabelCap, Pawn.LabelShort, _illnessHealingTarget.Label, Pawn.Named("PAWN")), Pawn, MessageTypeDefOf.PositiveEvent);
+            return true;
+        }
         private void ReduceAge()
         {
             if (Pawn.ageTracker.AgeBiologicalTicks < TargetAgeInTicks)
@@ -225,8 +258,11 @@ namespace ArchotechPlus
             Scribe_Values.Look(ref _ticksFullCharge, "ticksFullCharge");
             Scribe_Values.Look(ref _healingCharges, "healingCharges");
             Scribe_Values.Look(ref _resurrectionCharges, "resurrectionCharges");
+            Scribe_Collections.Look(ref previousImplants, "previousImplants", LookMode.BodyPart, LookMode.Def, ref bodyPartKeys, ref defsValues);
         }
 
+        private List<BodyPartRecord> bodyPartKeys;
+        private List<HediffDef> defsValues;
         public override string CompDebugString()
         {
             return "Ticks: " + _ticks
