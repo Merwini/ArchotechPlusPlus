@@ -366,6 +366,7 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 		<initialSeverity>1</initialSeverity>
 		<minSeverity>0</minSeverity>
 		<maxSeverity>2</maxSeverity>
+		<disablesNeed>Rest</disablesNeed>
 		<stages>
 			<li>
 				<painFactor>0</painFactor>
@@ -378,12 +379,6 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 					<MentalBreakThreshold>-0.05</MentalBreakThreshold>
 					<PainShockThreshold>0.05</PainShockThreshold>
 				</statOffsets>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.15</offset>
-					</li>
-				</capMods>
 			</li>
 			<li>
 				<painFactor>0</painFactor>
@@ -396,20 +391,8 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 					<MentalBreakThreshold>-0.1</MentalBreakThreshold>
 					<PainShockThreshold>0.1</PainShockThreshold>
 				</statOffsets>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.15</offset>
-					</li>
-				</capMods>
 			</li>
 		</stages>
-		<comps>
-			<li Class="HediffCompProperties_ReactOnDamage">
-				<damageDefIncoming>EMP</damageDefIncoming>
-				<createHediff>BrainShock</createHediff>
-			</li>
-		</comps>
 	</HediffDef>
 
 	<ThoughtDef>

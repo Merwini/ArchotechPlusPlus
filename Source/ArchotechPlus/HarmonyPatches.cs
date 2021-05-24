@@ -44,7 +44,7 @@ namespace ArchotechPlus
 			var hediff = ___pawn.health?.hediffSet.GetFirstHediffOfDef(HediffDef.Named("ArchotechCortex"));
 			if (hediff != null)
             {
-				__result *= 0.2f;
+				__result *= 0f;
             }
 		}
 	}
