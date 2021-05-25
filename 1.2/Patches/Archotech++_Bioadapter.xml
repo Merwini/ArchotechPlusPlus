@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+<Operation Class="PatchOperationFindMod">
+<success>Always</success>
+<mods>
+<li>Archotech++</li>
+<li>2496279558</li>
+</mods>
+<match Class="PatchOperationAdd">
+<xpath>/Defs/ThingDef[defName = "ArchotechBioadapter"]</xpath>
+<value>
+
+<costList>
+<ComponentSpacer>5</ComponentSpacer>
+<Plasteel>20</Plasteel>
+<Gold>2.5</Gold>
+</costList>
+
+<statBases>
+<WorkToMake>20000</WorkToMake>
+</statBases>
+
+<recipeMaker>
+<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+<effectWorking>Smith</effectWorking>
+<soundWorking>Recipe_Machining</soundWorking>
+
+<recipeUsers>
+<li>FabricationBench</li>
+</recipeUsers>
+
+<skillRequirements>
+<Intellectual>15</Intellectual>
+</skillRequirements>
+
+<unfinishedThingDef>UnfinishedHealthItemProsthetic</unfinishedThingDef>
+
+</recipeMaker>
+
+</value>
+</match>
+</Operation>
+</Patch>
