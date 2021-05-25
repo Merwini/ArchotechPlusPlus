@@ -347,7 +347,7 @@ See the link below for In-Game Effects:</description>
 			</li>
 		</comps>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="ImplantHediffBase">
 		<defName>ArchotechCortex</defName>
 		<hediffClass>Hediff_ImplantWithLevel</hediffClass>
@@ -369,6 +369,7 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 		<disablesNeed>Rest</disablesNeed>
 		<stages>
 			<li>
+				<partEfficiencyOffset>5</partEfficiencyOffset>
 				<painFactor>0</painFactor>
 				<minSeverity>1</minSeverity>
 				<statOffsets>
@@ -381,6 +382,7 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 				</statOffsets>
 			</li>
 			<li>
+				<partEfficiencyOffset>10</partEfficiencyOffset>
 				<painFactor>0</painFactor>
 				<minSeverity>2</minSeverity>
 				<statOffsets>
@@ -393,6 +395,10 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 				</statOffsets>
 			</li>
 		</stages>
+		<addedPartProps>
+			<solid>true</solid>
+			<partEfficiency>1</partEfficiency>
+		</addedPartProps>
 	</HediffDef>
 
 	<ThoughtDef>
@@ -608,7 +614,7 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 		<surgerySuccessChanceFactor>99999</surgerySuccessChanceFactor>
 		<anesthetize>false</anesthetize>
 	</RecipeDef>
-	
+
 	<!--Archotech Metamorphose-->
 	<ThingDef ParentName="ArchotechInjector">
 		<defName>ArchotechMetamorphose</defName>
@@ -632,7 +638,7 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 			</li>
 		</comps>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="ImplantHediffBase">
 		<defName>ArchotechMetamorphose</defName>
 		<hediffClass>Hediff_Implant</hediffClass>
@@ -643,7 +649,7 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 		<labelNoun>an archotech metamorphose</labelNoun>
 		<description>An installed archotech metamorphose.</description>
 		<comps>
-			<li Class="ArchotechPlus.HediffCompProperties_ArchotechConversion"></li>
+			<li Class="ArchotechPlus.HediffCompProperties_ArchotechConversion"/>
 		</comps>
 	</HediffDef>
 
@@ -675,6 +681,6 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 		</appliedOnFixedBodyParts>
 		<addsHediff>ArchotechMetamorphose</addsHediff>
 	</RecipeDef>
-	
-	
+
+
 </Defs>
