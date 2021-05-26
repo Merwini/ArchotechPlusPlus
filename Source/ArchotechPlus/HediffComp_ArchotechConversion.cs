@@ -17,22 +17,28 @@ namespace ArchotechPlus
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
             base.CompPostPostAdd(dinfo);
-            foreach (var implant in DefDatabase<RecipeDef>.AllDefs.Where(x => x.addsHediff != null && x.addsHediff.defName.ToLower().Contains("archotech")
-                    && x.appliedOnFixedBodyParts != null && (x.addsHediff.addedPartProps?.betterThanNatural ?? false)))
+            foreach (var implant in DefDatabase<RecipeDef>.AllDefs.Where(x => x.addsHediff != null && x.addsHediff.defName.ToLower().Contains("archotech")))
             {
                 if (implant.addsHediff != this.Def)
                 {
-                    foreach (var partDef in implant.appliedOnFixedBodyParts)
+                    if (implant.appliedOnFixedBodyParts != null)
                     {
-                        var parts = Pawn.RaceProps.body.GetPartsWithDef(partDef);
-                        if (parts != null)
+                        foreach (var partDef in implant.appliedOnFixedBodyParts)
                         {
-                            foreach (var part in parts)
+                            var parts = Pawn.RaceProps.body.GetPartsWithDef(partDef);
+                            if (parts != null)
                             {
-                                Pawn.health.RestorePart(part);
-                                Pawn.health.AddHediff(implant.addsHediff, part);
+                                foreach (var part in parts)
+                                {
+                                    Pawn.health.RestorePart(part);
+                                    Pawn.health.AddHediff(implant.addsHediff, part);
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        Pawn.health.AddHediff(implant.addsHediff);
                     }
                 }
             }
