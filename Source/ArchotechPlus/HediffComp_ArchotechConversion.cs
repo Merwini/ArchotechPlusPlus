@@ -17,6 +17,7 @@ namespace ArchotechPlus
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
             base.CompPostPostAdd(dinfo);
+            Dictionary<BodyPartRecord, List<HediffDef>> hediffsToAdd = new Dictionary<BodyPartRecord, List<HediffDef>>();
             foreach (var implant in DefDatabase<RecipeDef>.AllDefs.Where(x => x.addsHediff != null && x.addsHediff.defName.ToLower().Contains("archotech")))
             {
                 if (implant.addsHediff != this.Def)
@@ -30,15 +31,59 @@ namespace ArchotechPlus
                             {
                                 foreach (var part in parts)
                                 {
-                                    Pawn.health.RestorePart(part);
-                                    Pawn.health.AddHediff(implant.addsHediff, part);
+                                    if (part != this.parent.Part)
+                                    {
+                                        if (Pawn.health.hediffSet.PartIsMissing(part))
+                                        {
+                                            Pawn.health.RestorePart(part);
+                                        }
+                                        var newHediff = HediffMaker.MakeHediff(implant.addsHediff, Pawn);
+                                        Pawn.health.AddHediff(newHediff, part);
+                                        if (newHediff is Hediff_ImplantWithLevel withLevel)
+                                        {
+                                            withLevel.SetLevelTo((int)withLevel.def.maxSeverity);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (hediffsToAdd.ContainsKey(part))
+                                        {
+                                            hediffsToAdd[part].Add(implant.addsHediff);
+                                        }
+                                        else
+                                        {
+                                            hediffsToAdd[part] = new List<HediffDef> { implant.addsHediff };
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                     else
                     {
-                        Pawn.health.AddHediff(implant.addsHediff);
+                        var newHediff = HediffMaker.MakeHediff(implant.addsHediff, Pawn);
+                        Pawn.health.AddHediff(newHediff);
+                        if (newHediff is Hediff_ImplantWithLevel withLevel)
+                        {
+                            withLevel.SetLevelTo((int)withLevel.def.maxSeverity);
+                        }
+                    }
+                }
+            }
+
+            foreach (var data in hediffsToAdd)
+            {
+                if (Pawn.health.hediffSet.PartIsMissing(data.Key))
+                {
+                    Pawn.health.RestorePart(data.Key);
+                }
+                foreach (var hediffDef in data.Value)
+                {
+                    var newHediff = HediffMaker.MakeHediff(hediffDef, Pawn);
+                    Pawn.health.AddHediff(newHediff, data.Key);
+                    if (newHediff is Hediff_ImplantWithLevel withLevel)
+                    {
+                        withLevel.SetLevelTo((int)withLevel.def.maxSeverity);
                     }
                 }
             }
