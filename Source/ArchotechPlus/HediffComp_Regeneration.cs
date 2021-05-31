@@ -11,9 +11,6 @@ namespace ArchotechPlus
     {
         private const int HourTickInterval = 2500;
         private const int AgeMultiplier = 10;
-
-        private IntRange _healingCooldownRange = ArchotechPlusSettings.HealingRange;
-
         private static long TargetAgeInTicks => (ArchotechPlusSettings.TargetAge * 3600000L) + 1800000L;
 
         private int _ticks;
@@ -109,7 +106,7 @@ namespace ArchotechPlus
         private void ResetChargingTicks()
         {
             _ticks = 0;
-            _ticksFullCharge = _healingCooldownRange.RandomInRange * HourTickInterval;
+            _ticksFullCharge = ArchotechPlusSettings.HealingRange.RandomInRange * HourTickInterval;
         }
         private bool IsPawnInjured()
         {
