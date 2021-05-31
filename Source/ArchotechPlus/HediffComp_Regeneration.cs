@@ -17,11 +17,8 @@ namespace ArchotechPlus
         private int _ticksFullCharge;
 
         private int _healingCharges;
-        private static readonly int _maxHealingCharges = ArchotechPlusSettings.MaxHealingCharges;
 
-        private readonly bool _resurrectorEnabled = ArchotechPlusSettings.RegeneratorResurrects;
         private static int _resurrectionCharges;
-        private static readonly int _maxResurrectionCharges = ArchotechPlusSettings.MaxResurrectionCharges;
         
         private BodyPartRecord _bodyPartRegenerationTarget;
         private Hediff _woundRegenerationTarget;
@@ -87,11 +84,11 @@ namespace ArchotechPlus
         }
         private bool ResurrectorCanCharge()
         {
-            return parent.Severity > 2 && _resurrectorEnabled && _resurrectionCharges < _maxResurrectionCharges;
+            return parent.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects && _resurrectionCharges < ArchotechPlusSettings.MaxResurrectionCharges;
         }
         private bool HealerCanCharge()
         {
-            return parent.Severity > 1 && _healingCharges < _maxHealingCharges;
+            return parent.Severity > 1 && _healingCharges < ArchotechPlusSettings.MaxHealingCharges;
         }
         private bool UsableHealingCharge()
         {
@@ -270,7 +267,7 @@ namespace ArchotechPlus
         private string CompTipStringBuilder()
         {
             var tipBuilder = new StringBuilder();
-            if (parent.Severity > 2 && _resurrectorEnabled)
+            if (parent.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects)
             {
                 tipBuilder.AppendLine("Resurrector " + (_resurrectionCharges > 0 ? "charged" + "(" + _resurrectionCharges + "x)" : "not charged"));
             }

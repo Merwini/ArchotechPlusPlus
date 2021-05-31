@@ -7,8 +7,6 @@ namespace ArchotechPlus
     public class CompResurrector : ThingComp
     {
         private const int TicksPerHour = 2500;
-
-        private IntRange _resurrectionRange = ArchotechPlusSettings.ResurrectionRange;
         
         private int _ticksToResurrection;
         public Corpse Corpse;
@@ -19,7 +17,7 @@ namespace ArchotechPlus
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
-            _ticksToResurrection = _resurrectionRange.RandomInRange * TicksPerHour;
+            _ticksToResurrection = ArchotechPlusSettings.ResurrectionRange.RandomInRange * TicksPerHour;
              if (parent.GetType() == typeof(Corpse))
             {
                 Corpse = (Corpse)parent;
