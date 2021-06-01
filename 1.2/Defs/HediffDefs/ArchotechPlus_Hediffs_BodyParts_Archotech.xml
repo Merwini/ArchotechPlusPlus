@@ -74,10 +74,10 @@ See the link below for In-Game Effects:</description>
 Effects
 
 Level 1: +75% Healing Rate, Pawn will reverse-age 10 years per year to target age.
-
-Level 2: +200% Healing Rate. The implant will generate charges and use them to regenerate parts or heal chronic conditions. Charges may be seen by hovering over the regenerator in the health menu. The number of charges and the charge rate may be set to your preference in the mod options.
-
-Level 3: +300% Healing Rate. Additionally, the implant will generate a resurrection mist upon death if the implant is charged, which will attempt to resurrect the pawn after the time set in your mod-settings. The pawn must have a body with a head to be resurrected.</description>
+      
+Level 2: All previous capabilties. The implant will generate charges and use them to regenerate parts or heal chronic conditions. Charges may be seen by hovering over the regenerator in the health menu. The number of charges and the charge rate may be set to your preference in the mod options.
+      
+Level 3: All previous capabilities. Additionally, the implant will generate a resurrection mist upon death if the implant is charged, which will attempt to resurrect the pawn after the time set in your mod-settings. The pawn must have a body with a head to be resurrected.</description>
 		<comps>
 			<li Class="ArchotechPlus.HediffCompProperties_Regeneration">
 			</li>
@@ -92,11 +92,11 @@ Level 3: +300% Healing Rate. Additionally, the implant will generate a resurrect
 			</li>
 			<li>
 				<minSeverity>2</minSeverity>
-				<naturalHealingFactor>2.0</naturalHealingFactor>
+				<naturalHealingFactor>1.75</naturalHealingFactor>
 			</li>
 			<li>
 				<minSeverity>3</minSeverity>
-				<naturalHealingFactor>3.0</naturalHealingFactor>
+				<naturalHealingFactor>1.75</naturalHealingFactor>
 			</li>
 		</stages>
 
@@ -207,11 +207,11 @@ See the link below for In-Game Effects:</description>
 
 Effects
 
-Level 1: Sharp, Blunt, Heat armor rating on pawn's skin improved by 25%. Reduced bleeding from injuries by 25%.
+Level 1: Improved armor rating for the pawn's skin, comparable to an additional leather layer. Reduced bleeding from injuries by 20%.
 
-Level 2: Sharp, Blunt, Heat armor rating on pawn's skin improved by 50%. Reduced bleeding from injuries by 50%. Damage recieved is reduced by 50%.
-
-Level 3: Sharp, Blunt, Heat armor rating on pawn's skin improved by 100%. Reduced bleeding from injuries by 100%. Damage recieved is reduced by 90%.</description>
+Level 2: Improved armor rating for the pawn's skin, comparable to an additional synthread layer. Reduced bleeding from injuries by 40%. Damage recieved is reduced by 10%.
+      
+Level 3: Improved armor rating for the pawn's skin, comparable to an additional devilstrand layer. Reduced bleeding from injuries by 60%. Damage recieved is reduced by 25%.</description>
 		<initialSeverity>1</initialSeverity>
 		<minSeverity>0</minSeverity>
 		<maxSeverity>3</maxSeverity>
@@ -219,34 +219,34 @@ Level 3: Sharp, Blunt, Heat armor rating on pawn's skin improved by 100%. Reduce
 			<li>
 				<minSeverity>1</minSeverity>
 				<statOffsets>
-					<ArmorRating_Sharp>0.25</ArmorRating_Sharp>
-					<ArmorRating_Blunt>0.25</ArmorRating_Blunt>
-					<ArmorRating_Heat>0.25</ArmorRating_Heat>
+					<ArmorRating_Sharp>0.2</ArmorRating_Sharp>
+					<ArmorRating_Blunt>0.2</ArmorRating_Blunt>
+					<ArmorRating_Heat>0.2</ArmorRating_Heat>
 				</statOffsets>
-				<totalBleedFactor>0.85</totalBleedFactor>
+				<totalBleedFactor>0.8</totalBleedFactor>
 			</li>
 			<li>
 				<minSeverity>2</minSeverity>
 				<statOffsets>
-					<ArmorRating_Sharp>0.50</ArmorRating_Sharp>
-					<ArmorRating_Blunt>0.50</ArmorRating_Blunt>
-					<ArmorRating_Heat>0.50</ArmorRating_Heat>
+					<ArmorRating_Sharp>0.30</ArmorRating_Sharp>
+					<ArmorRating_Blunt>0.30</ArmorRating_Blunt>
+					<ArmorRating_Heat>0.30</ArmorRating_Heat>
 				</statOffsets>
-				<totalBleedFactor>0.5</totalBleedFactor>
+				<totalBleedFactor>0.6</totalBleedFactor>
 				<statFactors>
-					<IncomingDamageFactor>0.5</IncomingDamageFactor>
+					<IncomingDamageFactor>0.9</IncomingDamageFactor>
 				</statFactors>
 			</li>
 			<li>
 				<minSeverity>3</minSeverity>
 				<statOffsets>
-					<ArmorRating_Sharp>1.0</ArmorRating_Sharp>
-					<ArmorRating_Blunt>1.0</ArmorRating_Blunt>
-					<ArmorRating_Heat>1.0</ArmorRating_Heat>
+					<ArmorRating_Sharp>0.4</ArmorRating_Sharp>
+					<ArmorRating_Blunt>0.4</ArmorRating_Blunt>
+					<ArmorRating_Heat>0.4</ArmorRating_Heat>
 				</statOffsets>
-				<totalBleedFactor>0</totalBleedFactor>
+				<totalBleedFactor>0.4</totalBleedFactor>
 				<statFactors>
-					<IncomingDamageFactor>0.1</IncomingDamageFactor>
+					<IncomingDamageFactor>0.75</IncomingDamageFactor>
 				</statFactors>
 			</li>
 		</stages>
@@ -369,7 +369,7 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 		<disablesNeed>Rest</disablesNeed>
 		<stages>
 			<li>
-				<partEfficiencyOffset>5</partEfficiencyOffset>
+				<partEfficiencyOffset>0.5</partEfficiencyOffset>
 				<painFactor>0</painFactor>
 				<minSeverity>1</minSeverity>
 				<statOffsets>
@@ -382,7 +382,7 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 				</statOffsets>
 			</li>
 			<li>
-				<partEfficiencyOffset>10</partEfficiencyOffset>
+				<partEfficiencyOffset>1.0</partEfficiencyOffset>
 				<painFactor>0</painFactor>
 				<minSeverity>2</minSeverity>
 				<statOffsets>
