@@ -39,7 +39,7 @@ namespace ArchotechPlus
                                         }
                                         var newHediff = HediffMaker.MakeHediff(implant.addsHediff, Pawn);
                                         Pawn.health.AddHediff(newHediff, part);
-                                        if (newHediff is Hediff_ImplantWithLevel withLevel)
+                                        if (newHediff is Hediff_Level withLevel)
                                         {
                                             withLevel.SetLevelTo((int)withLevel.def.maxSeverity);
                                         }
@@ -63,7 +63,7 @@ namespace ArchotechPlus
                     {
                         var newHediff = HediffMaker.MakeHediff(implant.addsHediff, Pawn);
                         Pawn.health.AddHediff(newHediff);
-                        if (newHediff is Hediff_ImplantWithLevel withLevel)
+                        if (newHediff is Hediff_Level withLevel)
                         {
                             withLevel.SetLevelTo((int)withLevel.def.maxSeverity);
                         }
@@ -81,7 +81,7 @@ namespace ArchotechPlus
                 {
                     var newHediff = HediffMaker.MakeHediff(hediffDef, Pawn);
                     Pawn.health.AddHediff(newHediff, data.Key);
-                    if (newHediff is Hediff_ImplantWithLevel withLevel)
+                    if (newHediff is Hediff_Level withLevel)
                     {
                         withLevel.SetLevelTo((int)withLevel.def.maxSeverity);
                     }
