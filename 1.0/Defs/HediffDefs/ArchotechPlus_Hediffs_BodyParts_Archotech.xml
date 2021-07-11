@@ -25,7 +25,7 @@ The materials and engineering behind this implant are far beyond normal human co
       <li>RewardStandardHighFreq</li>
     </thingSetMakerTags>
     <statBases>
-      <MarketValue>2800</MarketValue>
+      <MarketValue>50000</MarketValue>
     </statBases>
     <graphicData>
       <texPath>Things/Item/Special/MechSerumHealer</texPath>
