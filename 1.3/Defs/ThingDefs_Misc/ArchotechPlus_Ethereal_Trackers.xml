@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <ThingDef>
     <defName>ResurrectorTracker</defName>
@@ -19,8 +19,8 @@
           </points>
         </radiusPerDayCurve>
       </li>
-      <li Class="CompProperties_ThrownMoteEmitter">
-        <mote>Mote_DustSlow</mote>
+      <li Class="CompProperties_ThrownFleckEmitter">
+	<fleck>DustSlow</fleck>
         <offsetMin>(-.5,0,-.5)</offsetMin>
         <offsetMax>(.5,0,.5)</offsetMax>
         <emissionInterval>15</emissionInterval>
