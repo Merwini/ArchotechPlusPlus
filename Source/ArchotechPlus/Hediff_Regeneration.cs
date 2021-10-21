@@ -7,7 +7,7 @@ namespace ArchotechPlus
 {
     // ReSharper disable once InconsistentNaming
     // Disabled for this project to maintain consistency with RimWorld naming conventions.
-    public class HediffComp_Regeneration : HediffComp
+    public class Hediff_Regeneration : Hediff_Level
     {
         private const int HourTickInterval = 2500;
         private const int AgeMultiplier = 10;
@@ -36,13 +36,15 @@ namespace ArchotechPlus
             }
             previousImplants[part] = hediff_Implant.def;
         }
-        public override void CompPostMake()
+        public override void PostMake()
         {
             ResetChargingTicks();
         }
 
-        public override void CompPostTick(ref float severityAdjustment)
+
+        public override void PostTick()
         {
+            base.PostTick();
             _ticks++;
             if (_ticks > _ticksFullCharge)
             {
@@ -54,7 +56,6 @@ namespace ArchotechPlus
                 LongTick();
             }
         }
-
         private void LongTick()
         {
             if (IsPawnInjured() && UsableHealingCharge())
@@ -84,11 +85,11 @@ namespace ArchotechPlus
         }
         private bool ResurrectorCanCharge()
         {
-            return parent.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects && _resurrectionCharges < ArchotechPlusSettings.MaxResurrectionCharges;
+            return this.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects && _resurrectionCharges < ArchotechPlusSettings.MaxResurrectionCharges;
         }
         private bool HealerCanCharge()
         {
-            return parent.Severity > 1 && _healingCharges < ArchotechPlusSettings.MaxHealingCharges;
+            return this.Severity > 1 && _healingCharges < ArchotechPlusSettings.MaxHealingCharges;
         }
         private bool UsableHealingCharge()
         {
@@ -114,16 +115,16 @@ namespace ArchotechPlus
         }
         private Hediff FindRandomDisease()
         {
-            return Pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable).TryRandomElement(out var result) ? result : null;
+            return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable).TryRandomElement(out var result) ? result : null;
         }
 
         private BodyPartRecord FindBiggestMissingBodyPart(float minCoverage = 0.0f)
         {
             BodyPartRecord bodyPartRecord = null;
-            foreach (var partsCommonAncestor in Pawn.health.hediffSet.GetMissingPartsCommonAncestors().Where(
+            foreach (var partsCommonAncestor in this.pawn.health.hediffSet.GetMissingPartsCommonAncestors().Where(
                 partsCommonAncestor =>
                     (double) partsCommonAncestor.Part.coverageAbsWithChildren >= (double) minCoverage &&
-                    !Pawn.health.hediffSet.PartOrAnyAncestorHasDirectlyAddedParts(partsCommonAncestor.Part) &&
+                    !this.pawn.health.hediffSet.PartOrAnyAncestorHasDirectlyAddedParts(partsCommonAncestor.Part) &&
                     (bodyPartRecord == null || (double) partsCommonAncestor.Part.coverageAbsWithChildren >
                         (double) bodyPartRecord.coverageAbsWithChildren)))
             {
@@ -133,7 +134,7 @@ namespace ArchotechPlus
         }
         private Hediff FindRandomPermanentWound()
         {
-            return !Pawn.health.hediffSet.hediffs.Where(hd => hd.def == HediffDefOf.ResurrectionPsychosis || hd.IsPermanent() || hd.def.chronic)
+            return !this.pawn.health.hediffSet.hediffs.Where(hd => hd.def == HediffDefOf.ResurrectionPsychosis || hd.IsPermanent() || hd.def.chronic)
                 .TryRandomElement(out var result) ? null : result;
         }
 
@@ -144,16 +145,16 @@ namespace ArchotechPlus
                 return false;
             }
 
-            Pawn.health.RestorePart(_bodyPartRegenerationTarget);
-            Pawn.health.AddHediff(RegenProgress, _bodyPartRegenerationTarget);
-            if (!PawnUtility.ShouldSendNotificationAbout(Pawn))
+            this.pawn.health.RestorePart(_bodyPartRegenerationTarget);
+            this.pawn.health.AddHediff(RegenProgress, _bodyPartRegenerationTarget);
+            if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
             {
                 return true;
             }
 
             Messages.Message(
-                "ArchotechPlusPartRegenerated".Translate((NamedArgument) parent.LabelCap,
-                    (NamedArgument) Pawn.LabelShort, (NamedArgument) _bodyPartRegenerationTarget.Label, Pawn.Named("PAWN")), Pawn,
+                "ArchotechPlusPartRegenerated".Translate((NamedArgument) this.LabelCap,
+                    (NamedArgument)this.pawn.LabelShort, (NamedArgument) _bodyPartRegenerationTarget.Label, this.pawn.Named("PAWN")), this.pawn,
                 MessageTypeDefOf.PositiveEvent);
             return true;
         }
@@ -165,15 +166,15 @@ namespace ArchotechPlus
             }
 
             _woundRegenerationTarget.Severity = 0.0f;
-            if (!PawnUtility.ShouldSendNotificationAbout(Pawn))
+            if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
             {
                 return true;
             }
 
             Messages.Message(
-                "ArchotechPlusMessagePermanentWoundHealed".Translate((NamedArgument) parent.LabelCap, 
-                    (NamedArgument) Pawn.LabelShort, (NamedArgument) _woundRegenerationTarget.Label,
-                    Pawn.Named("PAWN")), Pawn, MessageTypeDefOf.PositiveEvent);
+                "ArchotechPlusMessagePermanentWoundHealed".Translate((NamedArgument) this.LabelCap, 
+                    (NamedArgument)this.pawn.LabelShort, (NamedArgument) _woundRegenerationTarget.Label,
+                    this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
             return true;
         }
 
@@ -183,23 +184,23 @@ namespace ArchotechPlus
             {
                 return false;
             }
-            Pawn.health.hediffSet.hediffs.Remove(_illnessHealingTarget);
-            if (!PawnUtility.ShouldSendNotificationAbout(Pawn))
+            this.pawn.health.hediffSet.hediffs.Remove(_illnessHealingTarget);
+            if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
             {
                 return true;
             }
 
-            Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate(parent.LabelCap, Pawn.LabelShort, _illnessHealingTarget.Label, Pawn.Named("PAWN")), Pawn, MessageTypeDefOf.PositiveEvent);
+            Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate(this.LabelCap, this.pawn.LabelShort, _illnessHealingTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
             return true;
         }
         private void ReduceAge()
         {
-            if (Pawn.ageTracker.AgeBiologicalTicks < TargetAgeInTicks)
+            if (this.pawn.ageTracker.AgeBiologicalTicks < TargetAgeInTicks)
             {
                 return;
             }
 
-            Pawn.ageTracker.AgeBiologicalTicks -= HourTickInterval * AgeMultiplier;
+            this.pawn.ageTracker.AgeBiologicalTicks -= HourTickInterval * AgeMultiplier;
         }
 
         public override void Notify_PawnDied()
@@ -211,13 +212,13 @@ namespace ArchotechPlus
             }
             else
             {
-                if (PawnUtility.ShouldSendNotificationAbout(Pawn))
+                if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
                 {
                     Messages.Message(
                         "ArchotechPlusNoResurrectorCharges".Translate(
-                            (NamedArgument) parent.LabelCap,
-                            (NamedArgument) Pawn.LabelShort,
-                            Pawn.Named("PAWN")), Pawn, MessageTypeDefOf.NegativeEvent);
+                            (NamedArgument)this.LabelCap,
+                            (NamedArgument)this.pawn.LabelShort,
+                            this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.NegativeEvent);
                 }
             }
             base.Notify_PawnDied();
@@ -227,27 +228,28 @@ namespace ArchotechPlus
         {
             --_resurrectionCharges;
             _ticks = 0;
-            if (!PawnUtility.ShouldSendNotificationAbout(Pawn))
+            if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
             {
                 return;
             }
 
             Messages.Message(
                 "ArchotechPlusResurrectionChargeSpent".Translate(
-                    (NamedArgument) parent.LabelCap,
-                    (NamedArgument) Pawn.LabelShort,
-                    Pawn.Named("PAWN")), Pawn, MessageTypeDefOf.PositiveEvent);
+                    (NamedArgument) this.LabelCap,
+                    (NamedArgument)this.pawn.LabelShort,
+                    this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         }
         private void CreateResurrector()
         {
             var resurrectionTracker = (ThingWithComps) GenSpawn.Spawn(ThingDef.Named("ResurrectorTracker"),
-                Pawn.Corpse.Position, Pawn.Corpse.Map);
-            resurrectionTracker.GetComp<CompResurrector>().Corpse = Pawn.Corpse;
-            resurrectionTracker.GetComp<CompFollowsTarget>().Target = Pawn.Corpse;
+                this.pawn.Corpse.Position, this.pawn.Corpse.Map);
+            resurrectionTracker.GetComp<CompResurrector>().Corpse = this.pawn.Corpse;
+            resurrectionTracker.GetComp<CompFollowsTarget>().Target = this.pawn.Corpse;
         }
-        
-        public override void CompExposeData()
+
+        public override void ExposeData()
         {
+            base.ExposeData();
             Scribe_Values.Look(ref _ticks, "ticksToHeal");
             Scribe_Values.Look(ref _ticksFullCharge, "ticksFullCharge");
             Scribe_Values.Look(ref _healingCharges, "healingCharges");
@@ -257,9 +259,10 @@ namespace ArchotechPlus
 
         private List<BodyPartRecord> bodyPartKeys;
         private List<HediffDef> defsValues;
-        public override string CompDebugString()
+
+        public override string DebugString()
         {
-            return "Ticks: " + _ticks
+            return base.DebugString() + "\nTicks: " + _ticks
                                    + "\nTicksToFullCharge" + _ticksFullCharge
                                    + "\nTargetAge: " + ArchotechPlusSettings.TargetAge;
         }
@@ -267,7 +270,7 @@ namespace ArchotechPlus
         private string CompTipStringBuilder()
         {
             var tipBuilder = new StringBuilder();
-            if (parent.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects)
+            if (this.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects)
             {
                 tipBuilder.AppendLine("Resurrector " + (_resurrectionCharges > 0 ? "charged" + "(" + _resurrectionCharges + "x)" : "not charged"));
             }
@@ -289,8 +292,7 @@ namespace ArchotechPlus
 
             return tipBuilder.ToString();
         }
-        
-        public override string CompTipStringExtra => parent.Severity > 1 ? CompTipStringBuilder() : null;
-        
+
+        public override string TipStringExtra => this.Severity > 1 ? CompTipStringBuilder() : base.TipStringExtra;        
     }
 }

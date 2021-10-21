@@ -22,10 +22,10 @@ namespace ArchotechPlus
 		{
 			if (hediff is Hediff_MissingPart)
 			{
-				var hediffRegeneration = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x.TryGetComp<HediffComp_Regeneration>() != null);
+				var hediffRegeneration = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x is Hediff_Regeneration);
 				if (hediffRegeneration != null)
                 {
-					var hediffComp = hediffRegeneration.TryGetComp<HediffComp_Regeneration>();
+					var hediffComp = hediffRegeneration as Hediff_Regeneration;
 					var previousHediff = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x.Part == hediff.Part);
 					if (previousHediff is Hediff_Implant implant)
                     {

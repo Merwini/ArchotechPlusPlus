@@ -63,7 +63,7 @@ See the link below for In-Game Effects:</description>
 	</ThingDef>
 	<HediffDef ParentName="ImplantHediffBase">
 		<defName>ArchotechRegenerator</defName>
-		<hediffClass>HediffWithComps</hediffClass>
+		<hediffClass>ArchotechPlus.Hediff_Regeneration</hediffClass>
 		<descriptionHyperlinks>
 			<ThingDef>ArchotechRegenerator</ThingDef>
 		</descriptionHyperlinks>
@@ -78,10 +78,6 @@ Level 1: +75% Healing Rate, Pawn will reverse-age 10 years per year to target ag
 Level 2: All previous capabilties. The implant will generate charges and use them to regenerate parts or heal chronic conditions. Charges may be seen by hovering over the regenerator in the health menu. The number of charges and the charge rate may be set to your preference in the mod options.
       
 Level 3: All previous capabilities. Additionally, the implant will generate a resurrection mist upon death if the implant is charged, which will attempt to resurrect the pawn after the time set in your mod-settings. The pawn must have a body with a head to be resurrected.</description>
-		<comps>
-			<li Class="ArchotechPlus.HediffCompProperties_Regeneration">
-			</li>
-		</comps>
 		<initialSeverity>1</initialSeverity>
 		<minSeverity>0</minSeverity>
 		<maxSeverity>3</maxSeverity>

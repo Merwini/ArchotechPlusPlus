@@ -80,15 +80,15 @@ namespace ArchotechPlus
             if (successful)
             {
                 Messages.Message(
-                    "ArchotechPlusSuccessfulResurrection".Translate((NamedArgument) parent.LabelCap, 
-                        (NamedArgument) Corpse.InnerPawn.LabelShort,
+                    "ArchotechPlusSuccessfulResurrection".Translate((NamedArgument)parent.LabelCap,
+                        (NamedArgument)Corpse.InnerPawn.LabelShort,
                         Corpse.InnerPawn.Named("PAWN")), Corpse, MessageTypeDefOf.PositiveEvent);
             }
             else
             {
                 Messages.Message(
-                    "ArchotechPlusFailedResurrection".Translate((NamedArgument) parent.LabelCap, 
-                        (NamedArgument) Corpse.InnerPawn.LabelShort,
+                    "ArchotechPlusFailedResurrection".Translate((NamedArgument)parent.LabelCap,
+                        (NamedArgument)Corpse.InnerPawn.LabelShort,
                         Corpse.InnerPawn.Named("PAWN")), Corpse, MessageTypeDefOf.PositiveEvent);
             }
         }

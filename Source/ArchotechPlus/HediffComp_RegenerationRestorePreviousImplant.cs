@@ -33,8 +33,8 @@ namespace ArchotechPlus
 
         public override void CompPostPostRemoved()
         {
-			var hediff = Pawn.health.hediffSet.hediffs.FirstOrDefault(x => x.TryGetComp<HediffComp_Regeneration>() != null);
-			var hediffComp = hediff.TryGetComp<HediffComp_Regeneration>();
+			var hediff = Pawn.health.hediffSet.hediffs.FirstOrDefault(x => x is Hediff_Regeneration);
+			var hediffComp = hediff as Hediff_Regeneration;
 			if (hediffComp.previousImplants != null && hediffComp.previousImplants.TryGetValue(this.parent.Part, out var implant))
             {
 				Pawn.health.AddHediff(implant, this.parent.Part);
