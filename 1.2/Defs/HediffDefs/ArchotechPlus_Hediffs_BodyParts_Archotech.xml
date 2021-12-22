@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<!-- Surgery Base for Installing implants without medicine.-->
 	<RecipeDef Name="SurgeryInstallArchotechImplantBase" ParentName="SurgeryFlesh" Abstract="True">
@@ -618,7 +618,7 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 	<!--Archotech Metamorphose-->
 	<ThingDef ParentName="ArchotechInjector">
 		<defName>ArchotechMetamorphose</defName>
-		<label>archotech metamorphose</label>
+		<label>archotech metamorphosis</label>
 		<descriptionHyperlinks>
 			<HediffDef>ArchotechMetamorphose</HediffDef>
 		</descriptionHyperlinks>
@@ -645,9 +645,9 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 		<descriptionHyperlinks>
 			<ThingDef>ArchotechMetamorphose</ThingDef>
 		</descriptionHyperlinks>
-		<label>archotech metamorphose</label>
-		<labelNoun>an archotech metamorphose</labelNoun>
-		<description>An installed archotech metamorphose.</description>
+		<label>archotech metamorphosis</label>
+		<labelNoun>an archotech metamorphosis</labelNoun>
+		<description>An installed archotech metamorphosis.</description>
 		<comps>
 			<li Class="ArchotechPlus.HediffCompProperties_ArchotechConversion"/>
 		</comps>
@@ -655,12 +655,12 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 
 	<RecipeDef ParentName="SurgeryInstallArchotechImplantBase">
 		<defName>InstallArchotechMetamorphose</defName>
-		<label>install archotech metamorphose</label>
-		<description>Install an archotech metamorphose.</description>
+		<label>install archotech metamorphosis</label>
+		<description>Install an archotech metamorphosis.</description>
 		<descriptionHyperlinks>
 			<ThingDef>ArchotechMetamorphose</ThingDef>
 		</descriptionHyperlinks>
-		<jobString>Installing an archotech metamorphose.</jobString>
+		<jobString>Installing an archotech metamorphosis.</jobString>
 		<ingredients>
 			<li>
 				<filter>
