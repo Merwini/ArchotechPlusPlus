@@ -511,13 +511,14 @@ See the link below for In-Game Effects:</description>
 		</descriptionHyperlinks>
 		<label>archotech bioadapter</label>
 		<labelNoun>an archotech bioadapter</labelNoun>
-		<description>An installed archotech bioadapter.
+		<description>
+			An installed archotech bioadapter.
 
-Effects
+			Effects
 
-Level 1: 15C (27F) wider comfortable temperature range, 10% faster immunity gain, 50% resistance to toxic fallout.
+			Level 1: 15C (27F) wider comfortable temperature range, 10% faster immunity gain, 50% resistance to toxic environments.
 
-Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain, 100% resistance to toxic fallout.</description>
+			Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain, 100% resistance to toxic environments.</description>
 		<initialSeverity>1</initialSeverity>
 		<minSeverity>0</minSeverity>
 		<maxSeverity>2</maxSeverity>
@@ -527,7 +528,7 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 				<statOffsets>
 					<ComfyTemperatureMin>-15</ComfyTemperatureMin>
 					<ComfyTemperatureMax>15</ComfyTemperatureMax>
-					<ToxicResistance>0.5</ToxicResistance>
+					<ToxicEnvironmentResistance>0.5</ToxicEnvironmentResistance>
 					<ImmunityGainSpeed>0.10</ImmunityGainSpeed>
 				</statOffsets>
 			</li>
@@ -536,7 +537,7 @@ Level 2: 25C (45F) wider comfortable temperature range, 20% faster immunity gain
 				<statOffsets>
 					<ComfyTemperatureMin>-25</ComfyTemperatureMin>
 					<ComfyTemperatureMax>25</ComfyTemperatureMax>
-					<ToxicResistance>1</ToxicResistance>
+					<ToxicEnvironmentResistance>1</ToxicEnvironmentResistance>
 					<ImmunityGainSpeed>0.20</ImmunityGainSpeed>
 				</statOffsets>
 			</li>
