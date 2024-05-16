@@ -203,7 +203,7 @@ namespace ArchotechPlus
             this.pawn.ageTracker.AgeBiologicalTicks -= HourTickInterval * AgeMultiplier;
         }
 
-        public override void Notify_PawnDied()
+        public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
         {
             if (_resurrectionCharges > 0)
             {
@@ -221,7 +221,7 @@ namespace ArchotechPlus
                             this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.NegativeEvent);
                 }
             }
-            base.Notify_PawnDied();
+            base.Notify_PawnDied(dinfo, culprit);
         }
 
         private void SpendResurrectorCharge()
@@ -249,11 +249,18 @@ namespace ArchotechPlus
 
         public override void ExposeData()
         {
+
+            Log.Warning("0");
             base.ExposeData();
+            Log.Warning("1");
             Scribe_Values.Look(ref _ticks, "ticksToHeal");
+            Log.Warning("2");
             Scribe_Values.Look(ref _ticksFullCharge, "ticksFullCharge");
+            Log.Warning("3");
             Scribe_Values.Look(ref _healingCharges, "healingCharges");
+            Log.Warning("4");
             Scribe_Values.Look(ref _resurrectionCharges, "resurrectionCharges");
+            Log.Warning("5");
             Scribe_Collections.Look(ref previousImplants, "previousImplants", LookMode.BodyPart, LookMode.Def, ref bodyPartKeys, ref defsValues);
         }
 

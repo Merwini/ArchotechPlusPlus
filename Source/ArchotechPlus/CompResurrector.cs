@@ -36,7 +36,7 @@ namespace ArchotechPlus
             if (ResurrectionConditionsMet() && CorpseRemovedFromContainers())
             {
                 MessageWasResurrectionSuccessful(true);
-                ResurrectionUtility.ResurrectWithSideEffects(Corpse.InnerPawn);
+                ResurrectionUtility.TryResurrectWithSideEffects(Corpse.InnerPawn);
             }
             parent.Destroy();
         }
