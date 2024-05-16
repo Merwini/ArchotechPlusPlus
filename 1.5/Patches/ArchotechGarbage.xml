@@ -1,214 +1,216 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Operation Class="PatchOperationFindMod">
-	<mods>
-		<li>More Archotech Garbage (Continued)</li>
-		<li>More Archotech Garbage Continued</li>
-	</mods>
-	<match Class="PatchOperationSequence">
-		<success>Normal</success>
-		<operations>
-			<li Class="PatchOperationAdd">
-				<xpath>/Defs</xpath>
-				<value>
-					<RecipeDef>
-						<defName>MakeArchotechRegen</defName>
-						<label>make archotech regenerator</label>
-						<description>Makes archotech regenerator.</description>
-						<jobString>Making archotech regenerator.</jobString>
-						<workAmount>70000</workAmount>
-						<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-						<workSkill>Crafting</workSkill>
-						<effectWorking>Smith</effectWorking>
-						<soundWorking>Recipe_Smith</soundWorking>
-						<allowMixingIngredients>true</allowMixingIngredients>
-						<targetCountAdjustment>1</targetCountAdjustment>
-						<recipeUsers>
-							<li>ArchBench</li>
-						</recipeUsers>
-						<skillRequirements>
-							<Crafting>18</Crafting>
-						</skillRequirements>
-						<researchPrerequisite>ArchoTechTierThree</researchPrerequisite>
-						<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
-						<ingredients>
-							<li>
-								<filter>
-									<thingDefs>
-										<li>ArchotechScrap</li>
-									</thingDefs>
-								</filter>
-								<count>40</count>
-							</li>
-						</ingredients>
-						<fixedIngredientFilter>
-							<thingDefs>
-								<li>ArchotechScrap</li>
-							</thingDefs>
-						</fixedIngredientFilter>
-						<products>
-							<ArchotechRegenerator>1</ArchotechRegenerator>
-						</products>
-					</RecipeDef>
-					<RecipeDef>
-						<defName>MakeArchotechSubdermalArmor</defName>
-						<label>make archotech subdermal armor</label>
-						<description>Makes archotech subdermal armor.</description>
-						<jobString>Making archotech subdermal armor.</jobString>
-						<workAmount>65000</workAmount>
-						<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-						<workSkill>Crafting</workSkill>
-						<effectWorking>Smith</effectWorking>
-						<soundWorking>Recipe_Smith</soundWorking>
-						<allowMixingIngredients>true</allowMixingIngredients>
-						<targetCountAdjustment>1</targetCountAdjustment>
-						<recipeUsers>
-							<li>ArchBench</li>
-						</recipeUsers>
-						<skillRequirements>
-							<Crafting>18</Crafting>
-						</skillRequirements>
-						<researchPrerequisite>ArchoTechTierTwo</researchPrerequisite>
-						<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
-						<ingredients>
-							<li>
-								<filter>
-									<thingDefs>
-										<li>ArchotechScrap</li>
-									</thingDefs>
-								</filter>
-								<count>30</count>
-							</li>
-						</ingredients>
-						<fixedIngredientFilter>
-							<thingDefs>
-								<li>ArchotechScrap</li>
-							</thingDefs>
-						</fixedIngredientFilter>
-						<products>
-							<ArchotechSubdermalArmor>1</ArchotechSubdermalArmor>
-						</products>
-					</RecipeDef>
-					<RecipeDef>
-						<defName>MakeArchotechCortex</defName>
-						<label>make archotech cortex</label>
-						<description>Makes archotech cortex.</description>
-						<jobString>Making archotech cortex.</jobString>
-						<workAmount>65000</workAmount>
-						<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-						<workSkill>Crafting</workSkill>
-						<effectWorking>Smith</effectWorking>
-						<soundWorking>Recipe_Smith</soundWorking>
-						<allowMixingIngredients>true</allowMixingIngredients>
-						<targetCountAdjustment>1</targetCountAdjustment>
-						<recipeUsers>
-							<li>ArchBench</li>
-						</recipeUsers>
-						<skillRequirements>
-							<Crafting>16</Crafting>
-						</skillRequirements>
-						<researchPrerequisite>ArchoTechTierTwo</researchPrerequisite>
-						<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
-						<ingredients>
-							<li>
-								<filter>
-									<thingDefs>
-										<li>ArchotechScrap</li>
-									</thingDefs>
-								</filter>
-								<count>25</count>
-							</li>
-						</ingredients>
-						<fixedIngredientFilter>
-							<thingDefs>
-								<li>ArchotechScrap</li>
-							</thingDefs>
-						</fixedIngredientFilter>
-						<products>
-							<ArchotechCortex>1</ArchotechCortex>
-						</products>
-					</RecipeDef>
-					<RecipeDef>
-						<defName>MakeArchotechBioadapter</defName>
-						<label>make archotech bioadapter</label>
-						<description>Makes archotech bioadapter.</description>
-						<jobString>Making archotech bioadapter.</jobString>
-						<workAmount>35000</workAmount>
-						<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-						<workSkill>Crafting</workSkill>
-						<effectWorking>Smith</effectWorking>
-						<soundWorking>Recipe_Smith</soundWorking>
-						<allowMixingIngredients>true</allowMixingIngredients>
-						<targetCountAdjustment>1</targetCountAdjustment>
-						<recipeUsers>
-							<li>ArchBench</li>
-						</recipeUsers>
-						<skillRequirements>
-							<Crafting>14</Crafting>
-						</skillRequirements>
-						<researchPrerequisite>ArchoTechTierOne</researchPrerequisite>
-						<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
-						<ingredients>
-							<li>
-								<filter>
-									<thingDefs>
-										<li>ArchotechScrap</li>
-									</thingDefs>
-								</filter>
-								<count>15</count>
-							</li>
-						</ingredients>
-						<fixedIngredientFilter>
-							<thingDefs>
-								<li>ArchotechScrap</li>
-							</thingDefs>
-						</fixedIngredientFilter>
-						<products>
-							<ArchotechBioadapter>1</ArchotechBioadapter>
-						</products>
-					</RecipeDef>
-					<RecipeDef>
-						<defName>MakeArchotechMetamorphose</defName>
-						<label>make archotech metamorphose</label>
-						<description>Makes archotech metamorphose.</description>
-						<jobString>Making archotech metamorphose.</jobString>
-						<workAmount>85000</workAmount>
-						<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-						<workSkill>Crafting</workSkill>
-						<effectWorking>Smith</effectWorking>
-						<soundWorking>Recipe_Smith</soundWorking>
-						<allowMixingIngredients>true</allowMixingIngredients>
-						<targetCountAdjustment>1</targetCountAdjustment>
-						<recipeUsers>
-							<li>ArchBench</li>
-						</recipeUsers>
-						<skillRequirements>
-							<Crafting>20</Crafting>
-						</skillRequirements>
-						<researchPrerequisite>ArchoTechTierThree</researchPrerequisite>
-						<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
-						<ingredients>
-							<li>
-								<filter>
-									<thingDefs>
-										<li>ArchotechScrap</li>
-									</thingDefs>
-								</filter>
-								<count>325</count>
-							</li>
-						</ingredients>
-						<fixedIngredientFilter>
-							<thingDefs>
-								<li>ArchotechScrap</li>
-							</thingDefs>
-						</fixedIngredientFilter>
-						<products>
-							<ArchotechMetamorphose>1</ArchotechMetamorphose>
-						</products>
-					</RecipeDef>
-				</value>
-			</li>
+<Patch>
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>More Archotech Garbage (Continued)</li>
+			<li>More Archotech Garbage Continued</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<success>Normal</success>
+			<operations>
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs</xpath>
+					<value>
+						<RecipeDef>
+							<defName>MakeArchotechRegen</defName>
+							<label>make archotech regenerator</label>
+							<description>Makes archotech regenerator.</description>
+							<jobString>Making archotech regenerator.</jobString>
+							<workAmount>70000</workAmount>
+							<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+							<workSkill>Crafting</workSkill>
+							<effectWorking>Smith</effectWorking>
+							<soundWorking>Recipe_Smith</soundWorking>
+							<allowMixingIngredients>true</allowMixingIngredients>
+							<targetCountAdjustment>1</targetCountAdjustment>
+							<recipeUsers>
+								<li>ArchBench</li>
+							</recipeUsers>
+							<skillRequirements>
+								<Crafting>18</Crafting>
+							</skillRequirements>
+							<researchPrerequisite>ArchoTechTierThree</researchPrerequisite>
+							<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
+							<ingredients>
+								<li>
+									<filter>
+										<thingDefs>
+											<li>ArchotechScrap</li>
+										</thingDefs>
+									</filter>
+									<count>40</count>
+								</li>
+							</ingredients>
+							<fixedIngredientFilter>
+								<thingDefs>
+									<li>ArchotechScrap</li>
+								</thingDefs>
+							</fixedIngredientFilter>
+							<products>
+								<ArchotechRegenerator>1</ArchotechRegenerator>
+							</products>
+						</RecipeDef>
+						<RecipeDef>
+							<defName>MakeArchotechSubdermalArmor</defName>
+							<label>make archotech subdermal armor</label>
+							<description>Makes archotech subdermal armor.</description>
+							<jobString>Making archotech subdermal armor.</jobString>
+							<workAmount>65000</workAmount>
+							<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+							<workSkill>Crafting</workSkill>
+							<effectWorking>Smith</effectWorking>
+							<soundWorking>Recipe_Smith</soundWorking>
+							<allowMixingIngredients>true</allowMixingIngredients>
+							<targetCountAdjustment>1</targetCountAdjustment>
+							<recipeUsers>
+								<li>ArchBench</li>
+							</recipeUsers>
+							<skillRequirements>
+								<Crafting>18</Crafting>
+							</skillRequirements>
+							<researchPrerequisite>ArchoTechTierTwo</researchPrerequisite>
+							<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
+							<ingredients>
+								<li>
+									<filter>
+										<thingDefs>
+											<li>ArchotechScrap</li>
+										</thingDefs>
+									</filter>
+									<count>30</count>
+								</li>
+							</ingredients>
+							<fixedIngredientFilter>
+								<thingDefs>
+									<li>ArchotechScrap</li>
+								</thingDefs>
+							</fixedIngredientFilter>
+							<products>
+								<ArchotechSubdermalArmor>1</ArchotechSubdermalArmor>
+							</products>
+						</RecipeDef>
+						<RecipeDef>
+							<defName>MakeArchotechCortex</defName>
+							<label>make archotech cortex</label>
+							<description>Makes archotech cortex.</description>
+							<jobString>Making archotech cortex.</jobString>
+							<workAmount>65000</workAmount>
+							<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+							<workSkill>Crafting</workSkill>
+							<effectWorking>Smith</effectWorking>
+							<soundWorking>Recipe_Smith</soundWorking>
+							<allowMixingIngredients>true</allowMixingIngredients>
+							<targetCountAdjustment>1</targetCountAdjustment>
+							<recipeUsers>
+								<li>ArchBench</li>
+							</recipeUsers>
+							<skillRequirements>
+								<Crafting>16</Crafting>
+							</skillRequirements>
+							<researchPrerequisite>ArchoTechTierTwo</researchPrerequisite>
+							<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
+							<ingredients>
+								<li>
+									<filter>
+										<thingDefs>
+											<li>ArchotechScrap</li>
+										</thingDefs>
+									</filter>
+									<count>25</count>
+								</li>
+							</ingredients>
+							<fixedIngredientFilter>
+								<thingDefs>
+									<li>ArchotechScrap</li>
+								</thingDefs>
+							</fixedIngredientFilter>
+							<products>
+								<ArchotechCortex>1</ArchotechCortex>
+							</products>
+						</RecipeDef>
+						<RecipeDef>
+							<defName>MakeArchotechBioadapter</defName>
+							<label>make archotech bioadapter</label>
+							<description>Makes archotech bioadapter.</description>
+							<jobString>Making archotech bioadapter.</jobString>
+							<workAmount>35000</workAmount>
+							<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+							<workSkill>Crafting</workSkill>
+							<effectWorking>Smith</effectWorking>
+							<soundWorking>Recipe_Smith</soundWorking>
+							<allowMixingIngredients>true</allowMixingIngredients>
+							<targetCountAdjustment>1</targetCountAdjustment>
+							<recipeUsers>
+								<li>ArchBench</li>
+							</recipeUsers>
+							<skillRequirements>
+								<Crafting>14</Crafting>
+							</skillRequirements>
+							<researchPrerequisite>ArchoTechTierOne</researchPrerequisite>
+							<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
+							<ingredients>
+								<li>
+									<filter>
+										<thingDefs>
+											<li>ArchotechScrap</li>
+										</thingDefs>
+									</filter>
+									<count>15</count>
+								</li>
+							</ingredients>
+							<fixedIngredientFilter>
+								<thingDefs>
+									<li>ArchotechScrap</li>
+								</thingDefs>
+							</fixedIngredientFilter>
+							<products>
+								<ArchotechBioadapter>1</ArchotechBioadapter>
+							</products>
+						</RecipeDef>
+						<RecipeDef>
+							<defName>MakeArchotechMetamorphose</defName>
+							<label>make archotech metamorphose</label>
+							<description>Makes archotech metamorphose.</description>
+							<jobString>Making archotech metamorphose.</jobString>
+							<workAmount>85000</workAmount>
+							<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+							<workSkill>Crafting</workSkill>
+							<effectWorking>Smith</effectWorking>
+							<soundWorking>Recipe_Smith</soundWorking>
+							<allowMixingIngredients>true</allowMixingIngredients>
+							<targetCountAdjustment>1</targetCountAdjustment>
+							<recipeUsers>
+								<li>ArchBench</li>
+							</recipeUsers>
+							<skillRequirements>
+								<Crafting>20</Crafting>
+							</skillRequirements>
+							<researchPrerequisite>ArchoTechTierThree</researchPrerequisite>
+							<unfinishedThingDef>UnfinishedArchoThing</unfinishedThingDef>
+							<ingredients>
+								<li>
+									<filter>
+										<thingDefs>
+											<li>ArchotechScrap</li>
+										</thingDefs>
+									</filter>
+									<count>325</count>
+								</li>
+							</ingredients>
+							<fixedIngredientFilter>
+								<thingDefs>
+									<li>ArchotechScrap</li>
+								</thingDefs>
+							</fixedIngredientFilter>
+							<products>
+								<ArchotechMetamorphose>1</ArchotechMetamorphose>
+							</products>
+						</RecipeDef>
+					</value>
+				</li>
 
 
-		</operations>
-	</match>
-</Operation>
+			</operations>
+		</match>
+	</Operation>
+</Patch>
