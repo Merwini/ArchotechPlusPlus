@@ -115,7 +115,7 @@ namespace ArchotechPlus
         }
         private Hediff FindRandomDisease()
         {
-            return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable).TryRandomElement(out var result) ? result : null;
+            return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable && hd.def != ArchoTechPlusDefOf.MissingBodyPart).TryRandomElement(out var result) ? result : null;
         }
 
         private BodyPartRecord FindBiggestMissingBodyPart(float minCoverage = 0.0f)
