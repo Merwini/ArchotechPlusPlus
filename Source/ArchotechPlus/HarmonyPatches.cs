@@ -41,6 +41,10 @@ namespace ArchotechPlus
 	{
 		public static void Postfix(Need_Joy __instance, Pawn ___pawn, ref float __result)
 		{
+			if (!ArchotechPlusSettings.CortexDisablesRecreation)
+            {
+				return;
+			}
 			var hediff = ___pawn.health?.hediffSet.GetFirstHediffOfDef(HediffDef.Named("ArchotechCortex"));
 			if (hediff != null)
             {

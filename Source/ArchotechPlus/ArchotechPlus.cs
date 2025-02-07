@@ -21,7 +21,6 @@ namespace ArchotechPlus
             var listingStandard = new Listing_Standard(GameFont.Small) { ColumnWidth = inRect.width / 3f };
             listingStandard.Begin(inRect);
             listingStandard.CheckboxLabeled("Regenerator can de-age", ref ArchotechPlusSettings.RegeneratorDeAge, "The regenerator will change the age of the pawn when used.\nDefault: Enabled");
-
             if (ArchotechPlusSettings.RegeneratorDeAge)
             {
                 listingStandard.Label("Regenerator's Target Age in Years:", -1,
@@ -41,6 +40,8 @@ namespace ArchotechPlus
                 listingStandard.Label("\tResurrection Time Range (Hours):", -1,
                     "The pawn will be resurrected somewhere in the hour range set here, should the pawns body and head not be destroyed and the resurrector have a charge.\nDefault: 12 - 96 hours.");
             }
+            listingStandard.Gap();
+            listingStandard.CheckboxLabeled("Cortex disables recreation fall rate", ref ArchotechPlusSettings.CortexDisablesRecreation, "The Cortex will prevent Joy (recreation) Need from falling");
             listingStandard.NewColumn();
             listingStandard.Gap(Text.LineHeight + 3f);
             if (ArchotechPlusSettings.RegeneratorDeAge)
