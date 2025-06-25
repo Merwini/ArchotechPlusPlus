@@ -23,22 +23,21 @@ namespace ArchotechPlus
             listingStandard.CheckboxLabeled("Regenerator can de-age", ref ArchotechPlusSettings.RegeneratorDeAge, "The regenerator will change the age of the pawn when used.\nDefault: Enabled");
             if (ArchotechPlusSettings.RegeneratorDeAge)
             {
-                listingStandard.Label("Regenerator's Target Age in Years:", -1,
-                "This is the average age that the regenerator implant will return the pawn to over time. \nDefault: 28");
+                listingStandard.Label("Regenerator's Target Age in Years:", -1, tooltip: "This is the average age that the regenerator implant will return the pawn to over time. \nDefault: 28");
             }
             listingStandard.Label("Maximum Healing Charges:", -1,
-                "This is the maximum number of charges a level 2 or level 3 implant can accumulate over time. More charges will result in the implant being able to heal multiple parts with only an in-game hour between healing events. \nDefault: 1");
+                tooltip: "This is the maximum number of charges a level 2 or level 3 implant can accumulate over time. More charges will result in the implant being able to heal multiple parts with only an in-game hour between healing events. \nDefault: 1");
             listingStandard.Gap(Text.LineHeight / 2);
             listingStandard.Label("Healing Time Range(Hours): ", -1,
-                "The regenerator will regain a healing charge somewhere in this time range when above level 1.\nDefault: 120 - 240 hours");
+                tooltip: "The regenerator will regain a healing charge somewhere in this time range when above level 1.\nDefault: 120 - 240 hours");
             listingStandard.Gap();
             listingStandard.CheckboxLabeled("Regenerator Can Resurrect", ref ArchotechPlusSettings.RegeneratorResurrects, "The level 3 regenerator implant will attempt to resurrect the user if this is enabled.\nDefault: Enabled");
             if (ArchotechPlusSettings.RegeneratorResurrects)
             {
-                listingStandard.Label("\tMax Resurrection Charges:", -1, "The number of resurrecting charges that the level 3 regenerator will be able to accumulate over time.\nDefault: 1");
+                listingStandard.Label("\tMax Resurrection Charges:", -1, tooltip: "The number of resurrecting charges that the level 3 regenerator will be able to accumulate over time.\nDefault: 1");
                 listingStandard.Gap(Text.LineHeight / 2);
                 listingStandard.Label("\tResurrection Time Range (Hours):", -1,
-                    "The pawn will be resurrected somewhere in the hour range set here, should the pawns body and head not be destroyed and the resurrector have a charge.\nDefault: 12 - 96 hours.");
+                    tooltip: "The pawn will be resurrected somewhere in the hour range set here, should the pawns body and head not be destroyed and the resurrector have a charge.\nDefault: 12 - 96 hours.");
             }
             listingStandard.Gap();
             listingStandard.CheckboxLabeled("Cortex disables recreation fall rate", ref ArchotechPlusSettings.CortexDisablesRecreation, "The Cortex will prevent Joy (recreation) Need from falling");
@@ -98,7 +97,7 @@ namespace ArchotechPlus
 
         public override string SettingsCategory()
         {
-            return "Archotech+";
+            return "Archotech++";
         }
     }
 }

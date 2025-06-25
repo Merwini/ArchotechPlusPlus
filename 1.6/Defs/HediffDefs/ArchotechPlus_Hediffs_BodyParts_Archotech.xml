@@ -357,10 +357,6 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 		<initialSeverity>1</initialSeverity>
 		<minSeverity>0</minSeverity>
 		<maxSeverity>2</maxSeverity>
-
-		    <disablesNeeds>
-		      <li>Rest</li>
-		    </disablesNeeds>
 		<stages>
 			<li>
 				<partEfficiencyOffset>0.5</partEfficiencyOffset>
@@ -374,6 +370,9 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 					<MentalBreakThreshold>-0.05</MentalBreakThreshold>
 					<PainShockThreshold>0.05</PainShockThreshold>
 				</statOffsets>
+                <disablesNeeds>
+                    <li>Rest</li>
+                </disablesNeeds>
 			</li>
 			<li>
 				<partEfficiencyOffset>1.0</partEfficiencyOffset>
@@ -387,6 +386,9 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 					<MentalBreakThreshold>-0.1</MentalBreakThreshold>
 					<PainShockThreshold>0.1</PainShockThreshold>
 				</statOffsets>
+                <disablesNeeds>
+                    <li>Rest</li>
+                </disablesNeeds>
 			</li>
 		</stages>
 		<addedPartProps>
