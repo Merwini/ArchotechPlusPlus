@@ -13,5 +13,7 @@ namespace ArchotechPlus
     public class ArchoTechPlusDefOf
     {
         public static HediffDef MissingBodyPart;
+
+        public static HediffDef ArchotechCortex;
     }
 }

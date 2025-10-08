@@ -41,6 +41,7 @@ namespace ArchotechPlus
             }
             listingStandard.Gap();
             listingStandard.CheckboxLabeled("Cortex disables recreation fall rate", ref ArchotechPlusSettings.CortexDisablesRecreation, "The Cortex will prevent Joy (recreation) Need from falling");
+            listingStandard.CheckboxLabeled("Cortex disables rest need (changing this requires reloading your save)", ref ArchotechPlusSettings.CortexDisablesRestNeed, "The Cortex will remove the pawn's need to rest");
             listingStandard.NewColumn();
             listingStandard.Gap(Text.LineHeight + 3f);
             if (ArchotechPlusSettings.RegeneratorDeAge)
@@ -89,6 +90,7 @@ namespace ArchotechPlus
 
         public override void WriteSettings()
         {
+            CortexRestControl.CheckIfRestNeedShouldBeDisabled();
             Log.Message($"[Archotech+] Regenerator Target Age: {ArchotechPlusSettings.TargetAge}");
             Log.Message($"[Archotech+] Maximum Healing Charges: {ArchotechPlusSettings.MaxHealingCharges} charges");
             Log.Message($"[Archotech+] Regenerator Resurrection is enabled with {ArchotechPlusSettings.MaxResurrectionCharges} maximum charges");

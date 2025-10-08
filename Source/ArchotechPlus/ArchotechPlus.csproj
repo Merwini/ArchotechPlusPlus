@@ -38,6 +38,7 @@
     <Compile Include="CompProperties_FollowsTarget.cs" />
     <Compile Include="CompProperties_Resurrector.cs" />
     <Compile Include="CompResurrector.cs" />
+    <Compile Include="CortexRestControl.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="HediffComp_ArchotechConversion.cs" />
     <Compile Include="HediffComp_RegenerationRestorePreviousImplant.cs" />

@@ -12,6 +12,7 @@ namespace ArchotechPlus
         public static IntRange HealingRange = new IntRange(120, 240);
         public static IntRange ResurrectionRange =  new IntRange(12, 96);
         public static bool CortexDisablesRecreation = true;
+        public static bool CortexDisablesRestNeed = true;
 
         public override void ExposeData()
         {
@@ -23,6 +24,7 @@ namespace ArchotechPlus
             Scribe_Values.Look(ref HealingRange, "healingRange", new IntRange(120, 240));
             Scribe_Values.Look(ref ResurrectionRange, "resurrectionRange", new IntRange(12, 96));
             Scribe_Values.Look(ref CortexDisablesRecreation, "cortexDisablesRecreation", true);
+            Scribe_Values.Look(ref CortexDisablesRestNeed, "CortexDisablesRestNeed", true);
             base.ExposeData();
         }
     }
