@@ -249,18 +249,11 @@ namespace ArchotechPlus
 
         public override void ExposeData()
         {
-
-            Log.Warning("0");
             base.ExposeData();
-            Log.Warning("1");
             Scribe_Values.Look(ref _ticks, "ticksToHeal");
-            Log.Warning("2");
             Scribe_Values.Look(ref _ticksFullCharge, "ticksFullCharge");
-            Log.Warning("3");
             Scribe_Values.Look(ref _healingCharges, "healingCharges");
-            Log.Warning("4");
             Scribe_Values.Look(ref _resurrectionCharges, "resurrectionCharges");
-            Log.Warning("5");
             Scribe_Collections.Look(ref previousImplants, "previousImplants", LookMode.BodyPart, LookMode.Def, ref bodyPartKeys, ref defsValues);
         }
 
