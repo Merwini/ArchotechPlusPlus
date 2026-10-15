@@ -47,15 +47,16 @@ public class CompResurrector : ThingComp
 
         if (ResurrectionConditionsMet() && CorpseRemovedFromContainers())
         {
-            ResurrectionUtility.TryResurrectWithSideEffects(Pawn);
-            if (Pawn.Spawned && !Pawn.Dead)
+            Pawn pawn = Pawn;
+            ResurrectionUtility.TryResurrectWithSideEffects(pawn);
+            if (pawn.Spawned && !pawn.Dead)
             {
-                MessageWasResurrectionSuccessful(true);
+                MessageWasResurrectionSuccessful(true, pawn);
                 parent.Destroy();
             }
             else
             {
-                MessageWasResurrectionSuccessful(false);
+                MessageWasResurrectionSuccessful(false, Pawn);
                 parent.Destroy();
                 return;
             }
@@ -80,25 +81,25 @@ public class CompResurrector : ThingComp
         if (!corpse.DestroyedOrNull() && corpse.InnerPawn.health.hediffSet.HasHead)
             return true;
 
-        MessageWasResurrectionSuccessful(false);
+        MessageWasResurrectionSuccessful(false, Pawn);
         parent.Destroy();
 
         return false;
     }
 
-    private void MessageWasResurrectionSuccessful(bool successful)
+    private void MessageWasResurrectionSuccessful(bool successful, Pawn pawn)
     {
         if (successful)
         {
             Messages.Message(
-                "ArchotechPlusSuccessfulResurrection".Translate(Pawn.Named("PAWN")), new LookTargets(Pawn), MessageTypeDefOf.PositiveEvent);
+                "ArchotechPlusSuccessfulResurrection".Translate(pawn.Named("PAWN")), new LookTargets(pawn), MessageTypeDefOf.PositiveEvent);
         }
         else
         {
             Messages.Message(
                 "ArchotechPlusFailedResurrection".Translate((NamedArgument)parent.LabelCap,
-                    (NamedArgument)corpse.InnerPawn.LabelShort,
-                    Pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
+                    (NamedArgument)pawn.LabelShort,
+                    pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
         }
     }
 
