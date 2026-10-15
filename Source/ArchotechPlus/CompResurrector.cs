@@ -48,17 +48,15 @@ public class CompResurrector : ThingComp
 
     private bool CorpseRemovedFromContainers()
     {
-        if (CorpseIsInContainer && corpse.StoringThing().GetType().IsSubclassOf(typeof(Building_Casket)))
+        if (corpse.ParentHolder is Building_Casket casket)
         {
-            var container = (Building_Casket) corpse.StoringThing();
-            container.EjectContents();
+            casket.EjectContents();
         }
-        if (!CorpseIsInContainer)
+        if (corpse.Spawned)
         {
             return true;
         }
 
-        Debug.Log("Error: Corpse is in miscellaneous that could not be processed container.");
         return false;
     }
     
