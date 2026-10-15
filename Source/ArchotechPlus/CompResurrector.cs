@@ -10,10 +10,9 @@ public class CompResurrector : ThingComp
     
     private int _ticksToResurrection;
     public Corpse corpse;
+    private Pawn Pawn => corpse.InnerPawn;
 
     public CompProperties_Resurrector Props => (CompProperties_Resurrector) props;
-
-    public bool CorpseIsInContainer => corpse.StoringThing() != null;
 
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {
@@ -22,9 +21,18 @@ public class CompResurrector : ThingComp
             _ticksToResurrection = ArchotechPlusSettings.ResurrectionRange.RandomInRange * TicksPerHour;
         }
 
-        if (parent.GetType() == typeof(Corpse))
+        if (respawningAfterLoad && corpse == null)
         {
-            corpse = (Corpse)parent;
+            Log.Error($"CompResurrector corpse is missing. Removing.");
+            parent.Destroy();
+            return;
+        }
+
+        if (respawningAfterLoad && corpse.InnerPawn == null)
+        {
+            Log.Error($"CompResurrector parent corpse has no pawn associated");
+            parent.Destroy();
+            return;
         }
 
         base.PostSpawnSetup(respawningAfterLoad);
@@ -33,17 +41,25 @@ public class CompResurrector : ThingComp
     public override void CompTick()
     {
         _ticksToResurrection--;
+
         if (_ticksToResurrection > 0)
-        {
             return;
-        }
 
         if (ResurrectionConditionsMet() && CorpseRemovedFromContainers())
         {
-            MessageWasResurrectionSuccessful(true);
-            ResurrectionUtility.TryResurrectWithSideEffects(corpse.InnerPawn);
+            ResurrectionUtility.TryResurrectWithSideEffects(Pawn);
+            if (Pawn.Spawned && !Pawn.Dead)
+            {
+                MessageWasResurrectionSuccessful(true);
+                parent.Destroy();
+            }
+            else
+            {
+                MessageWasResurrectionSuccessful(false);
+                parent.Destroy();
+                return;
+            }
         }
-        parent.Destroy();
     }
 
     private bool CorpseRemovedFromContainers()
@@ -52,10 +68,9 @@ public class CompResurrector : ThingComp
         {
             casket.EjectContents();
         }
+
         if (corpse.Spawned)
-        {
             return true;
-        }
 
         return false;
     }
@@ -63,11 +78,11 @@ public class CompResurrector : ThingComp
     private bool ResurrectionConditionsMet()
     {
         if (!corpse.DestroyedOrNull() && corpse.InnerPawn.health.hediffSet.HasHead)
-        {
             return true;
-        }
 
         MessageWasResurrectionSuccessful(false);
+        parent.Destroy();
+
         return false;
     }
 
@@ -76,16 +91,14 @@ public class CompResurrector : ThingComp
         if (successful)
         {
             Messages.Message(
-                "ArchotechPlusSuccessfulResurrection".Translate((NamedArgument)parent.LabelCap,
-                    (NamedArgument)corpse.InnerPawn.LabelShort,
-                    corpse.InnerPawn.Named("PAWN")), corpse, MessageTypeDefOf.PositiveEvent);
+                "ArchotechPlusSuccessfulResurrection".Translate(Pawn.Named("PAWN")), new LookTargets(Pawn), MessageTypeDefOf.PositiveEvent);
         }
         else
         {
             Messages.Message(
                 "ArchotechPlusFailedResurrection".Translate((NamedArgument)parent.LabelCap,
                     (NamedArgument)corpse.InnerPawn.LabelShort,
-                    corpse.InnerPawn.Named("PAWN")), corpse, MessageTypeDefOf.PositiveEvent);
+                    Pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
         }
     }
 
@@ -93,6 +106,7 @@ public class CompResurrector : ThingComp
     {
         Scribe_Values.Look(ref _ticksToResurrection, "ticksToResurrection", 600);
         Scribe_References.Look(ref corpse, "targetPawn");
+
         base.PostExposeData();
     }
 }
