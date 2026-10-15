@@ -10,7 +10,7 @@ public class CompResurrector : ThingComp
     
     private int _ticksToResurrection;
     public Corpse corpse;
-    private Pawn Pawn => corpse.InnerPawn;
+    private Pawn Pawn => corpse?.InnerPawn;
 
     public CompProperties_Resurrector Props => (CompProperties_Resurrector) props;
 
@@ -56,7 +56,7 @@ public class CompResurrector : ThingComp
             }
             else
             {
-                MessageWasResurrectionSuccessful(false, Pawn);
+                MessageWasResurrectionSuccessful(false, pawn);
                 parent.Destroy();
                 return;
             }
@@ -78,10 +78,11 @@ public class CompResurrector : ThingComp
     
     private bool ResurrectionConditionsMet()
     {
-        if (!corpse.DestroyedOrNull() && corpse.InnerPawn.health.hediffSet.HasHead)
+        Pawn pawn = Pawn;
+        if (!corpse.DestroyedOrNull() && pawn != null && pawn.health.hediffSet.HasHead)
             return true;
 
-        MessageWasResurrectionSuccessful(false, Pawn);
+        MessageWasResurrectionSuccessful(false, pawn);
         parent.Destroy();
 
         return false;
@@ -89,6 +90,9 @@ public class CompResurrector : ThingComp
 
     private void MessageWasResurrectionSuccessful(bool successful, Pawn pawn)
     {
+        if (pawn == null)
+            return;
+
         if (successful)
         {
             Messages.Message(
