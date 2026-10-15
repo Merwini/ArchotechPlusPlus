@@ -75,7 +75,7 @@ public class Hediff_Regeneration : Hediff_Level
         {
             _resurrectionCharges++;
         }
-        else if (HealerCanCharge)
+        else if (HealerCanCharge) // will charge if resurrector isn't unlocked or its charges are full
         {
             _healingCharges++;
         }
@@ -100,11 +100,6 @@ public class Hediff_Regeneration : Hediff_Level
         return _bodyPartRegenerationTarget != null || _woundRegenerationTarget != null || _illnessHealingTarget != null;
     }
 
-    private Hediff FindRandomDisease()
-    {
-        return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable && hd.def != ArchoTechPlusDefOf.MissingBodyPart).TryRandomElement(out var result) ? result : null;
-    }
-
     private BodyPartRecord FindBiggestMissingBodyPart(float minCoverage = 0.0f)
     {
         BodyPartRecord bodyPartRecord = null;
@@ -122,9 +117,14 @@ public class Hediff_Regeneration : Hediff_Level
 
     private Hediff FindRandomPermanentWound()
     {
-        return !this.pawn.health.hediffSet.hediffs.Where(hd => hd.def == HediffDefOf.ResurrectionPsychosis || hd.IsPermanent() || hd.def.chronic)
-            .TryRandomElement(out var result) ? null : result;
-    }    
+        return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def == HediffDefOf.ResurrectionPsychosis || hd.IsPermanent() || hd.def.chronic)
+            .TryRandomElement(out var result) ? result : null;
+    }   
+
+    private Hediff FindRandomDisease()
+    {
+        return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable && hd.def != HediffDefOf.MissingBodyPart).TryRandomElement(out var result) ? result : null;
+    } 
     
     public void RememberImplant(Hediff_Implant hediff_Implant, BodyPartRecord part)
     {
