@@ -9,19 +9,24 @@ public class CompResurrector : ThingComp
     private const int TicksPerHour = 2500;
     
     private int _ticksToResurrection;
-    public Corpse Corpse;
+    public Corpse corpse;
 
     public CompProperties_Resurrector Props => (CompProperties_Resurrector) props;
 
-    public bool CorpseIsInContainer => Corpse.StoringThing() != null;
+    public bool CorpseIsInContainer => corpse.StoringThing() != null;
 
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {
-        _ticksToResurrection = ArchotechPlusSettings.ResurrectionRange.RandomInRange * TicksPerHour;
-            if (parent.GetType() == typeof(Corpse))
+        if (!respawningAfterLoad)
         {
-            Corpse = (Corpse)parent;
+            _ticksToResurrection = ArchotechPlusSettings.ResurrectionRange.RandomInRange * TicksPerHour;
         }
+
+        if (parent.GetType() == typeof(Corpse))
+        {
+            corpse = (Corpse)parent;
+        }
+
         base.PostSpawnSetup(respawningAfterLoad);
     }
 
@@ -36,23 +41,16 @@ public class CompResurrector : ThingComp
         if (ResurrectionConditionsMet() && CorpseRemovedFromContainers())
         {
             MessageWasResurrectionSuccessful(true);
-            ResurrectionUtility.TryResurrectWithSideEffects(Corpse.InnerPawn);
+            ResurrectionUtility.TryResurrectWithSideEffects(corpse.InnerPawn);
         }
         parent.Destroy();
     }
 
-    public override void PostExposeData()
-    {
-        Scribe_Values.Look(ref _ticksToResurrection, "ticksToResurrection", 600);
-        Scribe_References.Look(ref Corpse, "targetPawn");
-        base.PostExposeData();
-    }
-
     private bool CorpseRemovedFromContainers()
     {
-        if (CorpseIsInContainer && Corpse.StoringThing().GetType().IsSubclassOf(typeof(Building_Casket)))
+        if (CorpseIsInContainer && corpse.StoringThing().GetType().IsSubclassOf(typeof(Building_Casket)))
         {
-            var container = (Building_Casket) Corpse.StoringThing();
+            var container = (Building_Casket) corpse.StoringThing();
             container.EjectContents();
         }
         if (!CorpseIsInContainer)
@@ -66,7 +64,7 @@ public class CompResurrector : ThingComp
     
     private bool ResurrectionConditionsMet()
     {
-        if (!Corpse.DestroyedOrNull() && Corpse.InnerPawn.health.hediffSet.HasHead)
+        if (!corpse.DestroyedOrNull() && corpse.InnerPawn.health.hediffSet.HasHead)
         {
             return true;
         }
@@ -81,15 +79,22 @@ public class CompResurrector : ThingComp
         {
             Messages.Message(
                 "ArchotechPlusSuccessfulResurrection".Translate((NamedArgument)parent.LabelCap,
-                    (NamedArgument)Corpse.InnerPawn.LabelShort,
-                    Corpse.InnerPawn.Named("PAWN")), Corpse, MessageTypeDefOf.PositiveEvent);
+                    (NamedArgument)corpse.InnerPawn.LabelShort,
+                    corpse.InnerPawn.Named("PAWN")), corpse, MessageTypeDefOf.PositiveEvent);
         }
         else
         {
             Messages.Message(
                 "ArchotechPlusFailedResurrection".Translate((NamedArgument)parent.LabelCap,
-                    (NamedArgument)Corpse.InnerPawn.LabelShort,
-                    Corpse.InnerPawn.Named("PAWN")), Corpse, MessageTypeDefOf.PositiveEvent);
+                    (NamedArgument)corpse.InnerPawn.LabelShort,
+                    corpse.InnerPawn.Named("PAWN")), corpse, MessageTypeDefOf.PositiveEvent);
         }
+    }
+
+    public override void PostExposeData()
+    {
+        Scribe_Values.Look(ref _ticksToResurrection, "ticksToResurrection", 600);
+        Scribe_References.Look(ref corpse, "targetPawn");
+        base.PostExposeData();
     }
 }

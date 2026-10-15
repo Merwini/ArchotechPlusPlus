@@ -243,7 +243,7 @@ public class Hediff_Regeneration : Hediff_Level
     {
         var resurrectionTracker = (ThingWithComps) GenSpawn.Spawn(ThingDef.Named("ResurrectorTracker"),
             this.pawn.Corpse.Position, this.pawn.Corpse.Map);
-        resurrectionTracker.GetComp<CompResurrector>().Corpse = this.pawn.Corpse;
+        resurrectionTracker.GetComp<CompResurrector>().corpse = this.pawn.Corpse;
         resurrectionTracker.GetComp<CompFollowsTarget>().Target = this.pawn.Corpse;
     }
 
