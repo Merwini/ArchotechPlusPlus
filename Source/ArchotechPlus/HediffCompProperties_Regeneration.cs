@@ -1,12 +1,11 @@
 ﻿using Verse;
 
-namespace ArchotechPlus
+namespace ArchotechPlus;
+
+public class HediffCompProperties_Regeneration : HediffCompProperties
 {
-    public class HediffCompProperties_Regeneration : HediffCompProperties
+    public HediffCompProperties_Regeneration()
     {
-        public HediffCompProperties_Regeneration()
-        {
-            compClass = typeof (Hediff_Regeneration);
-        }
+        compClass = typeof (Hediff_Regeneration);
     }
 }

@@ -7,13 +7,14 @@ using System.Reflection;
 using System.Text;
 using Verse;
 
-namespace ArchotechPlus
-{
-    [DefOf]
-    public class ArchoTechPlusDefOf
-    {
-        public static HediffDef MissingBodyPart;
+namespace ArchotechPlus;
 
-        public static HediffDef ArchotechCortex;
-    }
+[DefOf]
+public class ArchoTechPlusDefOf
+{
+    public static HediffDef MissingBodyPart;
+
+    public static HediffDef ArchotechCortex;
+
+    public static HediffDef RegenerationProgress;
 }
