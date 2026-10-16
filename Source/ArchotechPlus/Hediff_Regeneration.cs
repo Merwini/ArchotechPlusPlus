@@ -163,7 +163,8 @@ public class Hediff_Regeneration : Hediff_Level
             return false;
         }
 
-        _woundRegenerationTarget.Severity = 0.0f;
+        pawn.health.RemoveHediff(_woundRegenerationTarget);
+
         if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
             Messages.Message(
