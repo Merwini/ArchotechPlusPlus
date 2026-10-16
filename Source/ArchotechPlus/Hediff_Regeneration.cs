@@ -39,7 +39,7 @@ public class Hediff_Regeneration : Hediff_Level
             ChargeRegenerator();
             ResetChargingTicks();
         }
-        if (_ticks % GenDate.TicksPerHour == 0)
+        if (Find.TickManager.TicksGame % GenDate.TicksPerHour == 0)
         {
             HourlyTick();
         }
@@ -53,7 +53,6 @@ public class Hediff_Regeneration : Hediff_Level
         {
             if (TryHealMissingPart() || TryHealRandomPermanentWound() || TryHealRandomDisease())
             {
-                _ticks = 0;
                 IsPawnInjured();
             }
         }
