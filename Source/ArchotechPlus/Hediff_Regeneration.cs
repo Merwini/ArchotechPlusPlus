@@ -129,10 +129,8 @@ public class Hediff_Regeneration : Hediff_Level
     
     public void RememberImplant(Hediff_Implant hediff_Implant, BodyPartRecord part)
     {
-        if (previousImplants is null)
-        {
-            previousImplants = new Dictionary<BodyPartRecord, HediffDef>();
-        }
+        previousImplants ??= new Dictionary<BodyPartRecord, HediffDef>();
+        
         previousImplants[part] = hediff_Implant.def;
     }
 

@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -16,23 +17,45 @@ public static class HarmonyInit
 	}
 }
 
+// Need to recursively check for artifical child Parts
+// When Hediff_MissingPart is added to parent part, it calls RestorePart on itself, which clears Hediffs from children before adding Hediff_Missing to them
+// So their implants are not preserved
+// For example, if the pawn has a bionic hand, and their arm is destroyed, the hand will not be remembered
+// For simplicity, assume that any Parts we need to remember will be at the same recursive depth
 [HarmonyPatch(typeof(HediffSet), "AddDirect")]
 public static class HediffSet_Patch
 {
 	public static void Prefix(HediffSet __instance, Hediff hediff, DamageInfo? dinfo = null, DamageWorker.DamageResult damageResult = null)
 	{
-		if (hediff is Hediff_MissingPart)
+		if (hediff is not Hediff_MissingPart || hediff.Part == null)
+			return;
+
+		var hediffRegen = __instance.hediffs.OfType<Hediff_Regeneration>().FirstOrDefault();
+		if (hediffRegen == null)
+			return;
+
+		var implants = __instance.hediffs.OfType<Hediff_Implant>().ToList();
+		var partsToCheck = new List<BodyPartRecord> { hediff.Part };
+
+		while (partsToCheck.Count > 0)
 		{
-			var hediffRegeneration = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x is Hediff_Regeneration);
-			if (hediffRegeneration != null)
+			var matches = implants
+				.Where(implant => partsToCheck.Contains(implant.Part))
+				.ToList();
+
+			if (matches.Count > 0)
 			{
-				var hediffComp = hediffRegeneration as Hediff_Regeneration;
-				var previousHediff = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x.Part == hediff.Part && x is Hediff_Implant);
-				if (previousHediff is Hediff_Implant implant)
+				foreach (var implant in matches)
 				{
-					hediffComp.RememberImplant(implant, hediff.Part);
+					hediffRegen.RememberImplant(implant, implant.Part);
 				}
+
+				return;
 			}
+
+			partsToCheck = partsToCheck
+				.SelectMany(part => part.GetDirectChildParts())
+				.ToList();
 		}
 	}
 }
