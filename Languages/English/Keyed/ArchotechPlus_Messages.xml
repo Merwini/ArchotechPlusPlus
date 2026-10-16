@@ -20,7 +20,7 @@
 	<!--Used by Comp Tip-->
 	<ArchotechPlusResurrectionChargesCount>Resurrector charges: {0}x</ArchotechPlusResurrectionChargesCount>
 	<ArchotechPlusHealingChargesCount>Healer charges: {0}x</ArchotechPlusHealingChargesCount>
-	<ArchotechPlusNextHealingTarget>Next healing target: {0} {1}</ArchotechPlusNextHealingTarget>
+	<ArchotechPlusNextHealingTarget>Next healing target: {0}</ArchotechPlusNextHealingTarget>
 	<ArchotechPlusWoundAndPart>{0} ({1})</ArchotechPlusWoundAndPart>
 	<ArchotechPlusWholeBody>whole body</ArchotechPlusWholeBody>
 	<ArchotechPlusCharged>{0} charged</ArchotechPlusCharged>
