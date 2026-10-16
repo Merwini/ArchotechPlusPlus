@@ -44,7 +44,7 @@
 	</HediffDef>
 	
 	<!-- Resurrection Sickness Hediff for when pawn is resurrected-->
-	<HediffDef ParentName="DiseaseBase">
+	<!-- <HediffDef ParentName="DiseaseBase">
 		<defName>ResurrectionProgress</defName>
 		<label>resurrection shock</label>
 		<description>The body takes time and ample energy to recover after being abruptly reawakened from the void.</description>
@@ -119,6 +119,6 @@
 				</capMods>
 			</li>
 		</stages>
-	</HediffDef>
+	</HediffDef> -->
 	
 </Defs>

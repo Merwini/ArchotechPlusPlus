@@ -15,4 +15,6 @@ public class ArchoTechPlusDefOf
     public static HediffDef ArchotechCortex;
 
     public static HediffDef RegenerationProgress;
+
+    //public static HediffDef ResurrectionProgress;
 }
