@@ -244,11 +244,11 @@ public class Hediff_Regeneration : Hediff_Level
         var pos = pawn?.Corpse?.PositionHeld;
         var map = pawn?.Corpse?.MapHeld;
 
-        if (map == null || pos == null)
+        if (map == null || pos == null || pos is not IntVec3 p || !p.InBounds(map))
             return false;
 
         var resurrectionTracker = (ThingWithComps) GenSpawn.Spawn(ThingDef.Named("ResurrectorTracker"),
-            this.pawn.Corpse.Position, this.pawn.Corpse.Map);
+            p, map);
         resurrectionTracker.GetComp<CompResurrector>().corpse = this.pawn.Corpse;
 
         return resurrectionTracker.Spawned;
