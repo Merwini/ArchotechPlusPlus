@@ -27,7 +27,7 @@ public static class HediffSet_Patch
 			if (hediffRegeneration != null)
 			{
 				var hediffComp = hediffRegeneration as Hediff_Regeneration;
-				var previousHediff = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x.Part == hediff.Part);
+				var previousHediff = __instance.pawn.health.hediffSet.hediffs.FirstOrDefault(x => x.Part == hediff.Part && x is Hediff_Implant);
 				if (previousHediff is Hediff_Implant implant)
 				{
 					hediffComp.RememberImplant(implant, hediff.Part);

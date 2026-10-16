@@ -33,9 +33,8 @@ public class Hediff_Regeneration : Hediff_Level
 
     public override void PostTick()
     {
-        base.PostTick();
         _ticks++;
-        if (_ticks > _ticksFullCharge)
+        if (_ticks >= _ticksFullCharge)
         {
             ChargeRegenerator();
             ResetChargingTicks();
@@ -44,6 +43,8 @@ public class Hediff_Regeneration : Hediff_Level
         {
             LongTick();
         }
+
+        base.PostTick();
     }
 
     private void LongTick()
@@ -96,7 +97,7 @@ public class Hediff_Regeneration : Hediff_Level
     {
         _bodyPartRegenerationTarget = FindBiggestMissingBodyPart();
         _woundRegenerationTarget = FindRandomPermanentWound();
-        _illnessHealingTarget = FindRandomDisease();
+        _illnessHealingTarget = FindRandomDiseaseOrInjury();
         return _bodyPartRegenerationTarget != null || _woundRegenerationTarget != null || _illnessHealingTarget != null;
     }
 
@@ -121,7 +122,7 @@ public class Hediff_Regeneration : Hediff_Level
             .TryRandomElement(out var result) ? result : null;
     }   
 
-    private Hediff FindRandomDisease()
+    private Hediff FindRandomDiseaseOrInjury()
     {
         return this.pawn.health.hediffSet.hediffs.Where(hd => hd.def.tendable && hd.def != HediffDefOf.MissingBodyPart).TryRandomElement(out var result) ? result : null;
     } 
@@ -144,15 +145,14 @@ public class Hediff_Regeneration : Hediff_Level
 
         this.pawn.health.RestorePart(_bodyPartRegenerationTarget);
         this.pawn.health.AddHediff(ArchoTechPlusDefOf.RegenerationProgress, _bodyPartRegenerationTarget);
-        if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
+        if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
-            return true;
+            Messages.Message(
+                "ArchotechPlusPartRegenerated".Translate((NamedArgument) this.LabelCap,
+                    (NamedArgument)this.pawn.LabelShort, (NamedArgument) _bodyPartRegenerationTarget.Label, this.pawn.Named("PAWN")), this.pawn,
+                MessageTypeDefOf.PositiveEvent);
         }
 
-        Messages.Message(
-            "ArchotechPlusPartRegenerated".Translate((NamedArgument) this.LabelCap,
-                (NamedArgument)this.pawn.LabelShort, (NamedArgument) _bodyPartRegenerationTarget.Label, this.pawn.Named("PAWN")), this.pawn,
-            MessageTypeDefOf.PositiveEvent);
         return true;
     }
 
@@ -164,15 +164,14 @@ public class Hediff_Regeneration : Hediff_Level
         }
 
         _woundRegenerationTarget.Severity = 0.0f;
-        if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
+        if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
-            return true;
+            Messages.Message(
+                "ArchotechPlusMessagePermanentWoundHealed".Translate((NamedArgument) this.LabelCap, 
+                    (NamedArgument)this.pawn.LabelShort, (NamedArgument) _woundRegenerationTarget.Label,
+                    this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         }
 
-        Messages.Message(
-            "ArchotechPlusMessagePermanentWoundHealed".Translate((NamedArgument) this.LabelCap, 
-                (NamedArgument)this.pawn.LabelShort, (NamedArgument) _woundRegenerationTarget.Label,
-                this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         return true;
     }
 
@@ -182,13 +181,12 @@ public class Hediff_Regeneration : Hediff_Level
         {
             return false;
         }
-        this.pawn.health.hediffSet.hediffs.Remove(_illnessHealingTarget);
-        if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
+        this.pawn.health.RemoveHediff(_illnessHealingTarget);
+        if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
-            return true;
+            Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate(this.LabelCap, this.pawn.LabelShort, _illnessHealingTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         }
 
-        Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate(this.LabelCap, this.pawn.LabelShort, _illnessHealingTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         return true;
     }
 
@@ -204,10 +202,12 @@ public class Hediff_Regeneration : Hediff_Level
 
     public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
     {
-        if (_resurrectionCharges > 0)
+        if (_resurrectionCharges > 0 && pawn.ParentHolder != null && pawn.MapHeld != null)
         {
-            SpendResurrectorCharge();
-            CreateResurrector();
+            if (CreateResurrector())
+            {
+                SpendResurrectorCharge();
+            }
         }
         else
         {
@@ -239,12 +239,19 @@ public class Hediff_Regeneration : Hediff_Level
                 this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
     }
 
-    private void CreateResurrector()
+    private bool CreateResurrector()
     {
+        var pos = pawn?.Corpse?.PositionHeld;
+        var map = pawn?.Corpse?.MapHeld;
+
+        if (map == null || pos == null)
+            return false;
+
         var resurrectionTracker = (ThingWithComps) GenSpawn.Spawn(ThingDef.Named("ResurrectorTracker"),
             this.pawn.Corpse.Position, this.pawn.Corpse.Map);
         resurrectionTracker.GetComp<CompResurrector>().corpse = this.pawn.Corpse;
-        resurrectionTracker.GetComp<CompFollowsTarget>().Target = this.pawn.Corpse;
+
+        return resurrectionTracker.Spawned;
     }
 
     public override string DebugString()
@@ -270,7 +277,7 @@ public class Hediff_Regeneration : Hediff_Level
         else if (_woundRegenerationTarget != null)
         {
             tipBuilder.AppendLine("Injury targeted: " + _woundRegenerationTarget.LabelCap + "(" +
-                                    _woundRegenerationTarget.Part.LabelCap + ")");
+                                    (_woundRegenerationTarget.Part != null ? _woundRegenerationTarget.Part.LabelCap : "whole body") + ")");
         }
         if (ResurrectorCanCharge || HealerCanCharge)
         {
@@ -281,6 +288,23 @@ public class Hediff_Regeneration : Hediff_Level
     }
 
     public override string TipStringExtra => this.Severity > 1 ? CompTipStringBuilder() : base.TipStringExtra;
+
+    // public override IEnumerable<Gizmo> GetGizmos()
+    // {
+    //     foreach (var g in base.GetGizmos())
+    //     {
+    //         yield return g;
+    //     }
+
+    //     if (DebugSettings.godMode)
+    //     {
+    //         yield return new Command_Action
+    //         {
+    //             defaultLabel = "res charge next tick",
+    //             action = () => _ticks = _ticksFullCharge - 1
+    //         };
+    //     }
+    // }
 
     private List<BodyPartRecord> bodyPartsWorkingList;
     private List<HediffDef> defsWorkingList;

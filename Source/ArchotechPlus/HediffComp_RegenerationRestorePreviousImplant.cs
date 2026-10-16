@@ -41,6 +41,7 @@ public class HediffComp_RegenerationRestorePreviousImplant : HediffComp
 		}
 		base.CompPostPostRemoved();
 	}
+
 	public override void CompPostMake()
 	{
 		base.CompPostMake();
@@ -55,10 +56,10 @@ public class HediffComp_RegenerationRestorePreviousImplant : HediffComp
 	public override void CompPostMerged(Hediff other)
 	{
 		base.CompPostMerged(other);
-		HediffComp_Disappears hediffComp_Disappears = other.TryGetComp<HediffComp_Disappears>();
-		if (hediffComp_Disappears != null && hediffComp_Disappears.ticksToDisappear > ticksToDisappear)
+		HediffComp_RegenerationRestorePreviousImplant hediffComp_RegenerationRestorePreviousImplant = other.TryGetComp<HediffComp_RegenerationRestorePreviousImplant>();
+		if (hediffComp_RegenerationRestorePreviousImplant != null && hediffComp_RegenerationRestorePreviousImplant.ticksToDisappear > ticksToDisappear)
 		{
-			ticksToDisappear = hediffComp_Disappears.ticksToDisappear;
+			ticksToDisappear = hediffComp_RegenerationRestorePreviousImplant.ticksToDisappear;
 		}
 	}
 
