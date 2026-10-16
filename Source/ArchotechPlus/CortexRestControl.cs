@@ -22,21 +22,21 @@ public static class CortexRestControl
         {
             if (!ArchotechPlusSettings.CortexDisablesRestNeed && stage.disablesNeeds.Contains(NeedDefOf.Rest))
             {
-                DisableRestNeed(stage);
+                EnableRestNeed(stage);
             }
             else if (ArchotechPlusSettings.CortexDisablesRestNeed && !stage.disablesNeeds.Contains(NeedDefOf.Rest))
             {
-                EnableRestNeed(stage);
+                DisableRestNeed(stage);
             }
         }
     }
 
-    private static void EnableRestNeed(HediffStage stage)
+    private static void DisableRestNeed(HediffStage stage)
     {
         stage.disablesNeeds.Add(NeedDefOf.Rest);
     }
 
-    private static void DisableRestNeed(HediffStage stage)
+    private static void EnableRestNeed(HediffStage stage)
     {
         stage.disablesNeeds.Remove(NeedDefOf.Rest);
     }

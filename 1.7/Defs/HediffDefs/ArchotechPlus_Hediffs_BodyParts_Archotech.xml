@@ -360,6 +360,8 @@ See the link below for In-Game Effects:</description>
 
 Effects
 
+All levels: Disables Needs for Rest and Recreation (can be toggled in mod settings).
+
 Level 1: 25% faster learning, 25% faster research, +10% medical tend/surgery quality, -5% mental break threshold, 5% increased pain shock threshold.
 
 Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery quality, -10% mental break threshold, 10% increased pain shock threshold.</description>
@@ -369,7 +371,6 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 		<stages>
 			<li>
 				<partEfficiencyOffset>0.5</partEfficiencyOffset>
-				<painFactor>0</painFactor>
 				<minSeverity>1</minSeverity>
 				<statOffsets>
 					<GlobalLearningFactor>0.25</GlobalLearningFactor>
@@ -385,7 +386,6 @@ Level 2: 50% faster learning, 50% faster research, +20% medical tend/surgery qua
 			</li>
 			<li>
 				<partEfficiencyOffset>1.0</partEfficiencyOffset>
-				<painFactor>0</painFactor>
 				<minSeverity>2</minSeverity>
 				<statOffsets>
 					<GlobalLearningFactor>0.5</GlobalLearningFactor>

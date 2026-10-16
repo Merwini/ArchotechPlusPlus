@@ -9,7 +9,7 @@ namespace ArchotechPlus;
 public class Hediff_Regeneration : Hediff_Level
 {
     private const int AgeMultiplier = 10;
-    private static long TargetAgeInTicks => (ArchotechPlusSettings.TargetAge * GenDate.TicksPerYear) + 1800000L;
+    private static long TargetAgeInTicks => ((long)ArchotechPlusSettings.TargetAge * GenDate.TicksPerYear) + 1800000L;
 
     private int _ticks;
     private int _ticksFullCharge;
@@ -29,6 +29,8 @@ public class Hediff_Regeneration : Hediff_Level
     public override void PostMake()
     {
         ResetChargingTicks();
+
+        base.PostMake();
     }
 
     public override void PostTick()
