@@ -147,10 +147,7 @@ public class Hediff_Regeneration : Hediff_Level
         this.pawn.health.AddHediff(ArchoTechPlusDefOf.RegenerationProgress, _bodyPartRegenerationTarget);
         if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
-            Messages.Message(
-                "ArchotechPlusPartRegenerated".Translate((NamedArgument) this.LabelCap,
-                    (NamedArgument)this.pawn.LabelShort, (NamedArgument) _bodyPartRegenerationTarget.Label, this.pawn.Named("PAWN")), this.pawn,
-                MessageTypeDefOf.PositiveEvent);
+            Messages.Message("ArchotechPlusPartRegenerated".Translate((NamedArgument)_bodyPartRegenerationTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         }
 
         return true;
@@ -167,10 +164,7 @@ public class Hediff_Regeneration : Hediff_Level
 
         if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
-            Messages.Message(
-                "ArchotechPlusMessagePermanentWoundHealed".Translate((NamedArgument) this.LabelCap, 
-                    (NamedArgument)this.pawn.LabelShort, (NamedArgument) _woundRegenerationTarget.Label,
-                    this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
+            Messages.Message("ArchotechPlusMessagePermanentWoundHealed".Translate((NamedArgument)_woundRegenerationTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         }
 
         return true;
@@ -185,7 +179,7 @@ public class Hediff_Regeneration : Hediff_Level
         this.pawn.health.RemoveHediff(_illnessHealingTarget);
         if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
         {
-            Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate(this.LabelCap, this.pawn.LabelShort, _illnessHealingTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
+            Messages.Message("ArchotechPlusMessageDiseaseHealed".Translate((NamedArgument)_illnessHealingTarget.Label, this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
         }
 
         return true;
@@ -214,30 +208,10 @@ public class Hediff_Regeneration : Hediff_Level
         {
             if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
             {
-                Messages.Message(
-                    "ArchotechPlusNoResurrectorCharges".Translate(
-                        (NamedArgument)this.LabelCap,
-                        (NamedArgument)this.pawn.LabelShort,
-                        this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.NegativeEvent);
+                Messages.Message("ArchotechPlusNoResurrectorCharges".Translate(this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.NegativeEvent);
             }
         }
         base.Notify_PawnDied(dinfo, culprit);
-    }
-
-    private void SpendResurrectorCharge()
-    {
-        _resurrectionCharges--;
-        _ticks = 0;
-        if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
-        {
-            return;
-        }
-
-        Messages.Message(
-            "ArchotechPlusResurrectionChargeSpent".Translate(
-                (NamedArgument) this.LabelCap,
-                (NamedArgument)this.pawn.LabelShort,
-                this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
     }
 
     private bool CreateResurrector()
@@ -253,6 +227,18 @@ public class Hediff_Regeneration : Hediff_Level
         resurrectionTracker.GetComp<CompResurrector>().corpse = this.pawn.Corpse;
 
         return resurrectionTracker.Spawned;
+    }
+
+    private void SpendResurrectorCharge()
+    {
+        _resurrectionCharges--;
+        _ticks = 0;
+        if (!PawnUtility.ShouldSendNotificationAbout(this.pawn))
+        {
+            return;
+        }
+
+        Messages.Message("ArchotechPlusResurrectionChargeSpent".Translate(this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.PositiveEvent);
     }
 
     public override string DebugString()
