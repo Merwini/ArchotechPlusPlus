@@ -20,7 +20,7 @@ public class HediffComp_ArchotechConversion : HediffComp
     {
         base.CompPostPostAdd(dinfo);
         Dictionary<BodyPartRecord, List<HediffDef>> hediffsToAdd = new Dictionary<BodyPartRecord, List<HediffDef>>();
-        foreach (var implant in DefDatabase<RecipeDef>.AllDefs.Where(x => x.addsHediff != null && x.addsHediff.defName.ToLower().Contains("archotech")))
+        foreach (var implant in Pawn.def.AllRecipes.Where(x => x.addsHediff != null  && x.addsHediff.defName.Contains("archotech", System.StringComparison.OrdinalIgnoreCase)))
         {
             if (implant.addsHediff != this.Def)
             {
