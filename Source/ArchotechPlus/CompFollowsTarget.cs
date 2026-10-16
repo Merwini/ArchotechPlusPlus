@@ -6,14 +6,14 @@ namespace ArchotechPlus;
 public class CompFollowsTarget : ThingComp
 {
     public Thing Target => parent.GetComp<CompResurrector>()?.corpse;
-    private CompFleckEmitter compFleckEmitter;
+    private CompThrownFleckEmitter compFleckEmitter;
     public CompProperties_FollowsTarget Props => (CompProperties_FollowsTarget) props;
 
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {
         if (compFleckEmitter == null)
         {
-            compFleckEmitter = parent.GetComp<CompFleckEmitter>();
+            compFleckEmitter = parent.GetComp<CompThrownFleckEmitter>();
         }
 
         base.PostSpawnSetup(respawningAfterLoad);
@@ -35,7 +35,7 @@ public class CompFollowsTarget : ThingComp
         var targetMap = target.MapHeld;
         var targetPosition = target.PositionHeld;
 
-        // target corpse is not on a map. trick CompFleckEmitter into not emitting ticks, so parent becomes 'invisible'
+        // target corpse is not on a map. trick CompThrownFleckEmitter into not emitting ticks, so parent becomes 'invisible'
         if (targetMap == null || !targetPosition.InBounds(targetMap))
         {
             compFleckEmitter.ticksSinceLastEmitted = 0;
