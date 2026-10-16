@@ -51,10 +51,11 @@ public class HediffComp_RegenerationRestorePreviousImplant : HediffComp
 	public override void CompPostMerged(Hediff other)
 	{
 		base.CompPostMerged(other);
-		HediffComp_RegenerationRestorePreviousImplant hediffComp_RegenerationRestorePreviousImplant = other.TryGetComp<HediffComp_RegenerationRestorePreviousImplant>();
-		if (hediffComp_RegenerationRestorePreviousImplant != null && hediffComp_RegenerationRestorePreviousImplant._ticksRemaining > _ticksRemaining)
+		HediffComp_RegenerationRestorePreviousImplant incoming = other.TryGetComp<HediffComp_RegenerationRestorePreviousImplant>();
+		if (incoming != null && incoming._ticksRemaining > _ticksRemaining)
 		{
-			_ticksRemaining = hediffComp_RegenerationRestorePreviousImplant._ticksRemaining;
+			_ticksRemaining = incoming._ticksRemaining;
+			_ticksToDisappear = incoming._ticksToDisappear;
 		}
 	}
 
