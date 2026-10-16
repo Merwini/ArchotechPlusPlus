@@ -9,6 +9,10 @@ public class CompFollowsTarget : ThingComp
 
     public override void CompTick()
     {
+        // if parent was destroyed in the same tick by the other comp
+        if (parent.DestroyedOrNull())
+            return;
+
         var target = Target;
         if (target.DestroyedOrNull())
         {
@@ -21,9 +25,7 @@ public class CompFollowsTarget : ThingComp
 
         // target corpse is despawned
         if (targetMap == null || !targetPosition.InBounds(targetMap))
-        {
             return;
-        }
 
         // if target is on a different map, despawn and respawn on that map
         if (parent.Map != targetMap)
