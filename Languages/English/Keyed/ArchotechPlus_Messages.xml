@@ -15,4 +15,12 @@
 	<ArchotechPlusSuccessfulResurrection>{PAWN_labelShort} has been resurrected by {PAWN_possessive} archotech regenerator!</ArchotechPlusSuccessfulResurrection>
 	<ArchotechPlusFailedResurrection>{PAWN_labelShort}'s body has been too damaged for {PAWN_possessive} regenerator to bring {PAWN_objective} back to life!</ArchotechPlusFailedResurrection>
 
+	<!--Used by Comp Tip-->
+	<ArchotechPlusResurrectionChargesCount>Resurrector charges: {0}x</ArchotechPlusResurrectionChargesCount>
+	<ArchotechPlusHealingChargesCount>Healer charges: {0}x</ArchotechPlusHealingChargesCount>
+	<ArchotechPlusNextHealingTarget>Next healing target: {0} {1}</ArchotechPlusNextHealingTarget>
+	<ArchotechPlusWoundAndPart>{0} ({1})</ArchotechPlusWoundAndPart>
+	<ArchotechPlusWholeBody>whole body</ArchotechPlusWholeBody>
+	<ArchotechPlusCharged>{0} charged</ArchotechPlusCharged>
+
 </LanguageData>

@@ -41,23 +41,23 @@ public class Hediff_Regeneration : Hediff_Level
         }
         if (_ticks % GenDate.TicksPerHour == 0)
         {
-            LongTick();
+            HourlyTick();
         }
 
         base.PostTick();
     }
 
-    private void LongTick()
+    private void HourlyTick()
     {
         if (IsPawnInjured() && TryUseHealingCharge())
         {
-            if (TryRestoreMissingPart() || TryHealRandomPermanentWound() || TryHealRandomDisease())
+            if (TryHealMissingPart() || TryHealRandomPermanentWound() || TryHealRandomDisease())
             {
                 _ticks = 0;
                 IsPawnInjured();
-                return;
             }
         }
+
         if(ArchotechPlusSettings.RegeneratorDeAge)
         {
             ReduceAge();
@@ -82,6 +82,14 @@ public class Hediff_Regeneration : Hediff_Level
         }
     }
     
+    private bool IsPawnInjured()
+    {
+        _bodyPartRegenerationTarget = FindBiggestMissingBodyPart();
+        _woundRegenerationTarget = FindRandomPermanentWound();
+        _illnessHealingTarget = FindRandomDiseaseOrInjury();
+        return _bodyPartRegenerationTarget != null || _woundRegenerationTarget != null || _illnessHealingTarget != null;
+    }
+
     private bool TryUseHealingCharge()
     {
         if (_healingCharges <= 0)
@@ -91,14 +99,6 @@ public class Hediff_Regeneration : Hediff_Level
 
         _healingCharges--;
         return true;
-    }
-
-    private bool IsPawnInjured()
-    {
-        _bodyPartRegenerationTarget = FindBiggestMissingBodyPart();
-        _woundRegenerationTarget = FindRandomPermanentWound();
-        _illnessHealingTarget = FindRandomDiseaseOrInjury();
-        return _bodyPartRegenerationTarget != null || _woundRegenerationTarget != null || _illnessHealingTarget != null;
     }
 
     private BodyPartRecord FindBiggestMissingBodyPart(float minCoverage = 0.0f)
@@ -134,7 +134,7 @@ public class Hediff_Regeneration : Hediff_Level
         previousImplants[part] = hediff_Implant.def;
     }
 
-    private bool TryRestoreMissingPart()
+    private bool TryHealMissingPart()
     {
         if (_bodyPartRegenerationTarget == null)
         {
@@ -249,26 +249,44 @@ public class Hediff_Regeneration : Hediff_Level
     private string CompTipStringBuilder()
     {
         var tipBuilder = new StringBuilder();
-        if (this.Severity > 2 && ArchotechPlusSettings.RegeneratorResurrects)
+        if (this.Severity >= 3 && ArchotechPlusSettings.RegeneratorResurrects)
         {
-            tipBuilder.AppendLine("Resurrector " + (_resurrectionCharges > 0 ? "charged" + "(" + _resurrectionCharges + "x)" : "not charged"));
+            tipBuilder.AppendLine("ArchotechPlusResurrectionChargesCount".Translate(_resurrectionCharges));
         }
 
-        tipBuilder.AppendLine("Healer " + (_healingCharges > 0 ? "charged" + "(" + _healingCharges + "x)" : "not charged"));
-        if (_bodyPartRegenerationTarget != null)
+        if (this.Severity >= 2)
         {
-            tipBuilder.AppendLine("Injury targeted: " + _bodyPartRegenerationTarget.LabelCap);
-        }
-        else if (_woundRegenerationTarget != null)
-        {
-            tipBuilder.AppendLine("Injury targeted: " + _woundRegenerationTarget.LabelCap + "(" +
-                                    (_woundRegenerationTarget.Part != null ? _woundRegenerationTarget.Part.LabelCap : "whole body") + ")");
-        }
-        if (ResurrectorCanCharge || HealerCanCharge)
-        {
-            tipBuilder.Append(PercentageCharged.ToStringPercent() + " charged");
-        }
+            tipBuilder.AppendLine("ArchotechPlusHealingChargesCount".Translate(_healingCharges));
 
+            string nextHealingTarget;
+            if (_bodyPartRegenerationTarget != null)
+            {
+                nextHealingTarget = _bodyPartRegenerationTarget.LabelCap;
+            }
+            else if (_woundRegenerationTarget != null)
+            {
+                string wound = _woundRegenerationTarget.LabelCap;
+                string bodyPart = _woundRegenerationTarget.Part != null ? _woundRegenerationTarget.Part.LabelCap : "ArchotechPlusWholeBody".Translate();
+                nextHealingTarget = "ArchotechPlusWoundAndPart".Translate(wound, bodyPart);
+            }
+            else if (_illnessHealingTarget != null)
+            {
+                nextHealingTarget = _illnessHealingTarget.LabelCap;
+            }
+            else
+            {
+                nextHealingTarget = "None".Translate();
+            }
+
+            tipBuilder.AppendLine("ArchotechPlusNextHealingTarget".Translate(nextHealingTarget));
+            tipBuilder.AppendLine();
+
+            if (ResurrectorCanCharge || HealerCanCharge)
+            {
+                tipBuilder.Append("ArchotechPlusCharged".Translate(PercentageCharged.ToStringPercent()));
+            }
+        }
+        
         return tipBuilder.ToString();
     }
 
