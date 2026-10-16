@@ -35,7 +35,6 @@ public class CompFollowsTarget : ThingComp
                 parent.DeSpawn();
             }
 
-            // Preserve component state, including the resurrection countdown.
             GenSpawn.Spawn(parent, targetPosition, targetMap, parent.Rotation, respawningAfterLoad: true);
 
             return;

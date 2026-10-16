@@ -95,15 +95,11 @@ public class CompResurrector : ThingComp
 
         if (successful)
         {
-            Messages.Message(
-                "ArchotechPlusSuccessfulResurrection".Translate(pawn.Named("PAWN")), new LookTargets(pawn), MessageTypeDefOf.PositiveEvent);
+            Messages.Message("ArchotechPlusSuccessfulResurrection".Translate(pawn.Named("PAWN")), new LookTargets(pawn), MessageTypeDefOf.PositiveEvent);
         }
         else
         {
-            Messages.Message(
-                "ArchotechPlusFailedResurrection".Translate((NamedArgument)parent.LabelCap,
-                    (NamedArgument)pawn.LabelShort,
-                    pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
+            Messages.Message("ArchotechPlusFailedResurrection".Translate(pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
         }
     }
 
