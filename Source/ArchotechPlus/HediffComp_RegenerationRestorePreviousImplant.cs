@@ -1,6 +1,8 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using System.Collections;
 using System.Linq;
+using System.Security;
 using Verse;
 
 namespace ArchotechPlus;
@@ -37,13 +39,21 @@ public class HediffComp_RegenerationRestorePreviousImplant : HediffComp
 
 	public override void CompPostPostRemoved()
 	{
-		var hediff = Pawn.health.hediffSet.hediffs.FirstOrDefault(x => x is Hediff_Regeneration);
-		if (hediff is Hediff_Regeneration hediffRegen
-			&& hediffRegen.previousImplants != null
-			&& hediffRegen.previousImplants.TryGetValue(this.parent.Part, out var implant))
+		var hediffRegen = Pawn.health.hediffSet.hediffs
+			.OfType<Hediff_Regeneration>()
+			.FirstOrDefault();
+
+		if (hediffRegen?.previousImplants != null)
+		{
+			var parts = this.parent.Part.GetPartAndAllChildParts();
+			foreach (var part in parts)
 			{
-				Pawn.health.AddHediff(implant, this.parent.Part);
+				if (hediffRegen.previousImplants.TryGetValue(part, out var implant))
+				{
+					Pawn.health.AddHediff(implant, part);
+				}
 			}
+		}
 		
 		base.CompPostPostRemoved();
 	}
