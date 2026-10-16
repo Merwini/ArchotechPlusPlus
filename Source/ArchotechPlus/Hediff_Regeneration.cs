@@ -195,20 +195,48 @@ public class Hediff_Regeneration : Hediff_Level
 
     public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
     {
-        if (_resurrectionCharges > 0 && pawn.ParentHolder != null && pawn.MapHeld != null)
+        if (!ArchotechPlusSettings.RegeneratorResurrects)
         {
-            if (CreateResurrector())
-            {
-                SpendResurrectorCharge();
-            }
+            base.Notify_PawnDied(dinfo, culprit);
+            return;
         }
-        else
+
+        bool shouldMessage = PawnUtility.ShouldSendNotificationAbout(this.pawn);
+
+        if (_resurrectionCharges <= 0)
         {
-            if (PawnUtility.ShouldSendNotificationAbout(this.pawn))
+            if (shouldMessage)
             {
                 Messages.Message("ArchotechPlusNoResurrectorCharges".Translate(this.pawn.Named("PAWN")), this.pawn, MessageTypeDefOf.NegativeEvent);
             }
+
+            base.Notify_PawnDied(dinfo, culprit);
+            return;
         }
+
+        if (pawn.ParentHolder == null || pawn.MapHeld == null)
+        {
+            if (shouldMessage)
+            {
+                Messages.Message("ArchotechPlusResurrectorInvalid".Translate(this.pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
+            }
+            
+            base.Notify_PawnDied(dinfo, culprit);
+            return;
+        }
+
+        if (CreateResurrector())
+        {
+            SpendResurrectorCharge();
+        }
+        else
+        {
+            if (shouldMessage)
+            {
+                Messages.Message("ArchotechPlusResurrectorFailSpawn".Translate(this.pawn.Named("PAWN")), MessageTypeDefOf.NegativeEvent);
+            }
+        }
+
         base.Notify_PawnDied(dinfo, culprit);
     }
 
@@ -220,8 +248,7 @@ public class Hediff_Regeneration : Hediff_Level
         if (map == null || pos == null || pos is not IntVec3 p || !p.InBounds(map))
             return false;
 
-        var resurrectionTracker = (ThingWithComps) GenSpawn.Spawn(ThingDef.Named("ResurrectorTracker"),
-            p, map);
+        var resurrectionTracker = (ThingWithComps) GenSpawn.Spawn(ThingDef.Named("ResurrectorTracker"), p, map);
         resurrectionTracker.GetComp<CompResurrector>().corpse = this.pawn.Corpse;
 
         return resurrectionTracker.Spawned;

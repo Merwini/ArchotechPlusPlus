@@ -10,6 +10,8 @@
 	<ArchotechPlusNewResurrectionCharge>{PAWN_labelShort}'s regenerator has fully recharged and is capable of creating a resurrecting mist if needed.</ArchotechPlusNewResurrectionCharge>
 	<ArchotechPlusResurrectionChargeSpent>{PAWN_labelShort}'s regenerator implant vented all of its stored mechanites and created a resurrecting mist that may be able to return {PAWN_objective} to life. </ArchotechPlusResurrectionChargeSpent>
 	<ArchotechPlusNoResurrectorCharges>{PAWN_labelShort}'s archotech did not have sufficient charge to create a resurrecting mist.</ArchotechPlusNoResurrectorCharges>
+	<ArchotechPlusResurrectorInvalid>{PAWN_labelShort} was not in a valid map or location when {PAWN_pronoun} died, and the regenerator failed to activate.</ArchotechPlusResurrectorInvalid>
+	<ArchotechPlusResurrectorFailSpawn>{PAWN_labelShort}'s regenerator failed to vent its stored mechanites to create a resurrecting mist for an unknown reason.</ArchotechPlusResurrectorFailSpawn>
 
 	<!--Used by the Resurrection Mist-->
 	<ArchotechPlusSuccessfulResurrection>{PAWN_labelShort} has been resurrected by {PAWN_possessive} archotech regenerator!</ArchotechPlusSuccessfulResurrection>
