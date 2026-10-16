@@ -16,19 +16,23 @@ public class HediffCompProperties_RegenerationRestorePreviousImplant : HediffCom
 
 public class HediffComp_RegenerationRestorePreviousImplant : HediffComp
 {
-	public int ticksToDisappear;
+	private int _ticksToDisappear;
+	private int _ticksRemaining;
 
 	public HediffCompProperties_RegenerationRestorePreviousImplant Props => (HediffCompProperties_RegenerationRestorePreviousImplant)props;
-	public override bool CompShouldRemove
+	public override bool CompShouldRemove => base.CompShouldRemove || _ticksRemaining <= 0;
+
+	public override void CompPostMake()
 	{
-		get
-		{
-			if (!base.CompShouldRemove)
-			{
-				return ticksToDisappear <= 0;
-			}
-			return true;
-		}
+		base.CompPostMake();
+		_ticksToDisappear = Props.disappearsAfterTicks.RandomInRange;
+		_ticksRemaining = _ticksToDisappear;
+	}
+
+	public override void CompPostTick(ref float severityAdjustment)
+	{
+		_ticksRemaining--;
+		parent.Severity = (float)_ticksRemaining / _ticksToDisappear;
 	}
 
 	public override void CompPostPostRemoved()
@@ -44,34 +48,24 @@ public class HediffComp_RegenerationRestorePreviousImplant : HediffComp
 		base.CompPostPostRemoved();
 	}
 
-	public override void CompPostMake()
-	{
-		base.CompPostMake();
-		ticksToDisappear = Props.disappearsAfterTicks.RandomInRange;
-	}
-
-	public override void CompPostTick(ref float severityAdjustment)
-	{
-		ticksToDisappear--;
-	}
-
 	public override void CompPostMerged(Hediff other)
 	{
 		base.CompPostMerged(other);
 		HediffComp_RegenerationRestorePreviousImplant hediffComp_RegenerationRestorePreviousImplant = other.TryGetComp<HediffComp_RegenerationRestorePreviousImplant>();
-		if (hediffComp_RegenerationRestorePreviousImplant != null && hediffComp_RegenerationRestorePreviousImplant.ticksToDisappear > ticksToDisappear)
+		if (hediffComp_RegenerationRestorePreviousImplant != null && hediffComp_RegenerationRestorePreviousImplant._ticksRemaining > _ticksRemaining)
 		{
-			ticksToDisappear = hediffComp_RegenerationRestorePreviousImplant.ticksToDisappear;
+			_ticksRemaining = hediffComp_RegenerationRestorePreviousImplant._ticksRemaining;
 		}
 	}
 
 	public override void CompExposeData()
 	{
-		Scribe_Values.Look(ref ticksToDisappear, "ticksToDisappear", 0);
+		Scribe_Values.Look(ref _ticksRemaining, "ticksRemaining", 0);
+		Scribe_Values.Look(ref _ticksToDisappear, "ticksToDisappear", 0);
 	}
 
 	public override string CompDebugString()
 	{
-		return "ticksToDisappear: " + ticksToDisappear;
+		return "_ticksRemaining: " + _ticksRemaining;
 	}
 }

@@ -14,9 +14,6 @@
 			<li Class="ArchotechPlus.HediffCompProperties_RegenerationRestorePreviousImplant">
 				<disappearsAfterTicks>45000~120000</disappearsAfterTicks>
 			</li>
-			<li Class="HediffCompProperties_SeverityPerDay">
-				<severityPerDay>-0.25</severityPerDay>
-			</li>
 		</comps>
 		<stages>
 			<li>
